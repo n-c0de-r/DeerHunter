@@ -1,0 +1,63 @@
+{
+  "frames": {
+    "Gun2.png": {
+      "frame": {
+        "x": 0,
+        "y": 0,
+        "w": 225,
+        "h": 289
+      },
+      "rotated": false,
+      "trimmed": true,
+      "spriteSourceSize": {
+        "x": 67,
+        "y": 68,
+        "w": 225,
+        "h": 289
+      },
+      "sourceSize": {
+        "w": 323,
+        "h": 366
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    "Gun1.png": {
+      "frame": {
+        "x": 0,
+        "y": 289,
+        "w": 254,
+        "h": 193
+      },
+      "rotated": true,
+      "trimmed": true,
+      "spriteSourceSize": {
+        "x": 56,
+        "y": 151,
+        "w": 254,
+        "h": 193
+      },
+      "sourceSize": {
+        "w": 323,
+        "h": 366
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    }
+  },
+  "meta": {
+    "app": "http://free-tex-packer.com",
+    "version": "0.6.7",
+    "image": "Gun.png",
+    "format": "RGBA8888",
+    "size": {
+      "w": 225,
+      "h": 543
+    },
+    "scale": 1
+  }
+}

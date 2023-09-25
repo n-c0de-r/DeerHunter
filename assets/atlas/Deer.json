@@ -1,0 +1,399 @@
+{
+  "frames": {
+    "deerJump07.png": {
+      "frame": {
+        "x": 0,
+        "y": 0,
+        "w": 321,
+        "h": 213
+      },
+      "rotated": false,
+      "trimmed": true,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 94,
+        "w": 321,
+        "h": 213
+      },
+      "sourceSize": {
+        "w": 375,
+        "h": 375
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    "deerJump06.png": {
+      "frame": {
+        "x": 321,
+        "y": 0,
+        "w": 320,
+        "h": 215
+      },
+      "rotated": false,
+      "trimmed": true,
+      "spriteSourceSize": {
+        "x": 13,
+        "y": 69,
+        "w": 320,
+        "h": 215
+      },
+      "sourceSize": {
+        "w": 375,
+        "h": 375
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    "deerJump05.png": {
+      "frame": {
+        "x": 0,
+        "y": 213,
+        "w": 310,
+        "h": 222
+      },
+      "rotated": false,
+      "trimmed": true,
+      "spriteSourceSize": {
+        "x": 31,
+        "y": 45,
+        "w": 310,
+        "h": 222
+      },
+      "sourceSize": {
+        "w": 375,
+        "h": 375
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    "deerJump04.png": {
+      "frame": {
+        "x": 641,
+        "y": 0,
+        "w": 297,
+        "h": 228
+      },
+      "rotated": false,
+      "trimmed": true,
+      "spriteSourceSize": {
+        "x": 56,
+        "y": 27,
+        "w": 297,
+        "h": 228
+      },
+      "sourceSize": {
+        "w": 375,
+        "h": 375
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    "deerJump08.png": {
+      "frame": {
+        "x": 310,
+        "y": 215,
+        "w": 296,
+        "h": 204
+      },
+      "rotated": false,
+      "trimmed": true,
+      "spriteSourceSize": {
+        "x": 6,
+        "y": 117,
+        "w": 296,
+        "h": 204
+      },
+      "sourceSize": {
+        "w": 375,
+        "h": 375
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    "deerJump09.png": {
+      "frame": {
+        "x": 310,
+        "y": 419,
+        "w": 289,
+        "h": 216
+      },
+      "rotated": false,
+      "trimmed": true,
+      "spriteSourceSize": {
+        "x": 11,
+        "y": 106,
+        "w": 289,
+        "h": 216
+      },
+      "sourceSize": {
+        "w": 375,
+        "h": 375
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    "deerJump00.png": {
+      "frame": {
+        "x": 0,
+        "y": 435,
+        "w": 245,
+        "h": 287
+      },
+      "rotated": true,
+      "trimmed": true,
+      "spriteSourceSize": {
+        "x": 124,
+        "y": 45,
+        "w": 245,
+        "h": 287
+      },
+      "sourceSize": {
+        "w": 375,
+        "h": 375
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    "deerJump03.png": {
+      "frame": {
+        "x": 938,
+        "y": 0,
+        "w": 279,
+        "h": 245
+      },
+      "rotated": false,
+      "trimmed": true,
+      "spriteSourceSize": {
+        "x": 86,
+        "y": 20,
+        "w": 279,
+        "h": 245
+      },
+      "sourceSize": {
+        "w": 375,
+        "h": 375
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    "deerJump01.png": {
+      "frame": {
+        "x": 606,
+        "y": 228,
+        "w": 255,
+        "h": 277
+      },
+      "rotated": true,
+      "trimmed": true,
+      "spriteSourceSize": {
+        "x": 117,
+        "y": 33,
+        "w": 255,
+        "h": 277
+      },
+      "sourceSize": {
+        "w": 375,
+        "h": 375
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    "deerJump10.png": {
+      "frame": {
+        "x": 606,
+        "y": 483,
+        "w": 276,
+        "h": 223
+      },
+      "rotated": false,
+      "trimmed": true,
+      "spriteSourceSize": {
+        "x": 40,
+        "y": 101,
+        "w": 276,
+        "h": 223
+      },
+      "sourceSize": {
+        "w": 375,
+        "h": 375
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    "deerJump02.png": {
+      "frame": {
+        "x": 287,
+        "y": 635,
+        "w": 264,
+        "h": 262
+      },
+      "rotated": false,
+      "trimmed": true,
+      "spriteSourceSize": {
+        "x": 108,
+        "y": 24,
+        "w": 264,
+        "h": 262
+      },
+      "sourceSize": {
+        "w": 375,
+        "h": 375
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    "deerJump12.png": {
+      "frame": {
+        "x": 0,
+        "y": 680,
+        "w": 214,
+        "h": 261
+      },
+      "rotated": true,
+      "trimmed": true,
+      "spriteSourceSize": {
+        "x": 70,
+        "y": 68,
+        "w": 214,
+        "h": 261
+      },
+      "sourceSize": {
+        "w": 375,
+        "h": 375
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    "deerJump13.png": {
+      "frame": {
+        "x": 0,
+        "y": 894,
+        "w": 212,
+        "h": 261
+      },
+      "rotated": true,
+      "trimmed": true,
+      "spriteSourceSize": {
+        "x": 72,
+        "y": 68,
+        "w": 212,
+        "h": 261
+      },
+      "sourceSize": {
+        "w": 375,
+        "h": 375
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    "deerJump14.png": {
+      "frame": {
+        "x": 1217,
+        "y": 0,
+        "w": 203,
+        "h": 261
+      },
+      "rotated": true,
+      "trimmed": true,
+      "spriteSourceSize": {
+        "x": 81,
+        "y": 68,
+        "w": 203,
+        "h": 261
+      },
+      "sourceSize": {
+        "w": 375,
+        "h": 375
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    "deerJump15.png": {
+      "frame": {
+        "x": 1478,
+        "y": 0,
+        "w": 197,
+        "h": 261
+      },
+      "rotated": true,
+      "trimmed": true,
+      "spriteSourceSize": {
+        "x": 87,
+        "y": 68,
+        "w": 197,
+        "h": 261
+      },
+      "sourceSize": {
+        "w": 375,
+        "h": 375
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    "deerJump11.png": {
+      "frame": {
+        "x": 1739,
+        "y": 0,
+        "w": 250,
+        "h": 247
+      },
+      "rotated": false,
+      "trimmed": true,
+      "spriteSourceSize": {
+        "x": 54,
+        "y": 81,
+        "w": 250,
+        "h": 247
+      },
+      "sourceSize": {
+        "w": 375,
+        "h": 375
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    }
+  },
+  "meta": {
+    "app": "http://free-tex-packer.com",
+    "version": "0.6.7",
+    "image": "Deer.png",
+    "format": "RGBA8888",
+    "size": {
+      "w": 1989,
+      "h": 1106
+    },
+    "scale": 1
+  }
+}
