@@ -1,6 +1,7 @@
 import Phaser from 'phaser';
 // import eventManager from '../classes/EventManager';
 import * as Keys from '../data/keys';
+import Settings from '../data/settings';
 
 // const DIRECTIONS = { left: -1, right: 1, none: 0 }; // possible move directions, abstracted
 // const SCORE = {
@@ -24,6 +25,27 @@ export default class UI extends Phaser.Scene {
   }
 
   init(data) {
+    const huntBack = this.add.nineslice(0, 0, Keys.Assets.UI, Keys.UI.CountContainer, 304, 150, 16, 16, 16, 16).setOrigin(0, 0);
+
+    const huntEmpty = this.add.group({
+      key: Keys.Assets.UI,
+      frame: Keys.UI.CountNegative,
+      repeat: 2,
+      setXY: { x: 56, y: 72, stepX: 96 },
+    });
+
+    this.huntFull = this.add.group({
+      key: Keys.Assets.UI,
+      frame: Keys.UI.CountPositive,
+      repeat: 2,
+      setXY: { x: 56, y: 72, stepX: 96 },
+    });
+
+    this.huntFull.setVisible(false);
+
+    this.cameras.main.fadeIn(Settings.Cam_FadeTime);
+
+    // this.huntContainer = this.add.container(0, 0, [huntBack /* , huntEmpty, this.huntFull */]);
     //   SCORE.count = 0;
     //   TIME.count = 0;
     //   TIME.exact = 0;
@@ -105,25 +127,7 @@ export default class UI extends Phaser.Scene {
     //   });
   }
 
-  create() {
-    const huntBack = this.add.nineslice(0, 0, Keys.Assets.UI, Keys.UI.CountContainer, 400, 200, 16, 16, 16, 16);
-
-    const huntEmpty = this.add.group({
-      key: Keys.Assets.UI,
-      frame: Keys.UI.CountNegative,
-      repeat: 2,
-      setXY: { x: 48, y: 72, stepX: 72 },
-    });
-
-    this.huntFull = this.add.group({
-      key: Keys.Assets.UI,
-      frame: Keys.UI.CountPositive,
-      repeat: 2,
-      setXY: { x: 48, y: 72, stepX: 72 },
-    });
-
-    this.huntContainer = this.add.container(0, 0, [huntBack, huntEmpty, this.huntFull]);
-  }
+  create() {}
 
   //   this.anims.create({
   //     key: Keys.Assets.Explosion,

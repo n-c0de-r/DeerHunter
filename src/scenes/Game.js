@@ -20,7 +20,7 @@ export default class extends Phaser.Scene {
     const background = this.add.image(0, 0, Keys.Assets.Background);
     background.setOrigin(0, 0);
     background.setDisplaySize(this.sys.game.config.width, this.sys.game.config.height);
-    // this.scene.run(Keys.Scenes.UI);
+    this.scene.run(Keys.Scenes.UI);
 
     this.cameras.main.fadeIn(Settings.Cam_FadeTime);
   }
@@ -31,14 +31,14 @@ export default class extends Phaser.Scene {
       this.scene.start(Keys.Scenes.Splash);
     });
 
-    this.gun = new Gun(this, 0, 0);
+    this.gun = new Gun(this);
   }
 
   update(time, delta) {
     this.timePassed += delta;
     if (!this.gameOver && this.timePassed >= Settings.Game_Time) {
       this.gameOver = true;
-      this.cameras.main.fadeOut(Settings.Cam_FadeTime);
+      // this.cameras.main.fadeOut(Settings.Cam_FadeTime);
     }
   }
 }

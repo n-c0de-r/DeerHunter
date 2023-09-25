@@ -10,8 +10,8 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
    * @param {number} x The x position to spawn at.
    * @param {number} y The y position to spawn at.
    */
-  constructor(scene, x, y, key = Keys.Assets.Dude) {
-    super(scene, x, y, key);
+  constructor(scene, x, y) {
+    super(scene, (x = scene.sys.game.config.width / 2), (y = scene.sys.game.config.height - 100), Keys.Assets.Gun);
     scene.add.existing(this);
 
     eventManager.on(Keys.Events.moveGun, this.move, this);
