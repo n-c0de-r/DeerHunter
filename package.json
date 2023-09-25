@@ -3,10 +3,10 @@
   "version": "2.0.0",
   "description": "A bootstrap project for create games with Phaser + ES6 + Webpack.",
   "author": "leandro cabrera <leandcabrera@gmail.com>",
-  "main": "index.js",
+  "main": "src/index.js",
   "scripts": {
-    "start": "webpack",
-    "deploy": ""
+    "start": "webpack-dev-server --config webpack/base.js --open",
+    "build": "webpack --config webpack/prod.js "
   },
   "license": "MIT",
   "devDependencies": {
@@ -16,19 +16,29 @@
     "babel-loader": "^8.0.2",
     "browser-sync": "^2.18.13",
     "browser-sync-webpack-plugin": "^2.2.2",
-    "eslint": "^8.49.0",
+    "clean-webpack-plugin": "^3.0.0",
     "eslint-config-standard": "^12.0.0",
-    "eslint-plugin-import": "^2.7.0",
     "eslint-plugin-node": "^7.0.1",
     "eslint-plugin-promise": "^4.0.0",
     "eslint-plugin-standard": "^4.0.0",
     "expose-loader": "^0.7.3",
-    "webpack": "^4.17.2",
-    "webpack-cli": "^3.1.0"
+    "file-loader": "^4.3.0",
+    "html-webpack-plugin": "^3.2.0",
+    "raw-loader": "^3.1.0",
+    "terser-webpack-plugin": "^2.3.8",
+    "webpack": "^4.46.0",
+    "webpack-cli": "^3.3.12",
+    "webpack-dev-server": "^3.11.3",
+    "webpack-merge": "^4.2.2"
   },
   "dependencies": {
+    "css-loader": "^5.2.7",
+    "eslint": "^8.43.0",
     "eslint-config-airbnb-base": "^15.0.0",
-    "phaser": "3.60",
+    "eslint-plugin-import": "^2.27.5",
+    "eslint-plugin-only-warn": "^1.1.0",
+    "phaser": "^3.60.0",
+    "style-loader": "^2.0.0",
     "webfontloader": "^1.6.28"
   }
 }

@@ -7,16 +7,14 @@ export default class extends Phaser.Scene {
     super({ key: Keys.Scenes.Splash });
   }
 
-  preload() {
-    //
-    // load your assets
-    //
-    this.load.image('mushroom', 'assets/images/mushroom2.png');
+  preload(data) {}
+
+  create(data) {
+    this.test = this.add.text(100, 100, 'Splash ', {
+      font: `64px ${Keys.UI.Font}`,
+      fill: '#7744ff',
+    });
   }
 
-  create() {
-    this.scene.start(Keys.Scenes.Game);
-  }
-
-  update() {}
+  update(time, delta) {}
 }

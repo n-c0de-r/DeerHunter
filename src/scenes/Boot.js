@@ -19,7 +19,7 @@ export default class Boots extends Phaser.Scene {
     super({ key: Keys.Scenes.Boot });
   }
 
-  init() {
+  init(data) {
     this.fontsReady = false;
     this.fontsLoaded = this.fontsLoaded.bind(this);
     this.add.text(100, 100, 'loading fonts...');
@@ -32,7 +32,7 @@ export default class Boots extends Phaser.Scene {
     });
   }
 
-  preload() {
+  preload(data) {
     this.load.image(Keys.Assets.Background, BackgroundImage);
 
     // Atlases
@@ -42,9 +42,9 @@ export default class Boots extends Phaser.Scene {
     this.load.atlas(Keys.Assets.Gun, GunAtlas, GunJson);
   }
 
-  update() {
+  update(time, delta) {
     if (this.fontsReady) {
-      this.scene.start(Keys.Scenes.Load);
+      this.scene.start(Keys.Scenes.Game);
     }
   }
 

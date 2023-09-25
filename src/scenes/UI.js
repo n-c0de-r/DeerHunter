@@ -23,108 +23,107 @@ export default class UI extends Phaser.Scene {
     super({ key: Keys.Scenes.UI });
   }
 
-  // init(data) {
-  //   SCORE.count = 0;
-  //   TIME.count = 0;
-  //   TIME.exact = 0;
-  //   this.cursors = this.input.keyboard.createCursorKeys();
-  //   // according to https://newdocs.phaser.io/docs/3.52.0/focus/Phaser.Input.Keyboard.KeyboardPlugin-addKeys
-  //   this.wsad = this.input.keyboard.addKeys("W, S, A, D, SPACE");
+  init(data) {
+    //   SCORE.count = 0;
+    //   TIME.count = 0;
+    //   TIME.exact = 0;
+    //   this.cursors = this.input.keyboard.createCursorKeys();
+    //   // according to https://newdocs.phaser.io/docs/3.52.0/focus/Phaser.Input.Keyboard.KeyboardPlugin-addKeys
+    //   this.wsad = this.input.keyboard.addKeys("W, S, A, D, SPACE");
+    //   this.scoreDisplay = this.add.text(16, 16, SCORE.text + SCORE.count, {
+    //     fontFamily: Keys.UI.Font,
+    //     fontSize: `${SCORE.size}px`,
+    //     color: SCORE.color,
+    //   });
+    //   this.SecondText = this.add.text(
+    //     this.sys.game.config.width - 16,
+    //     16,
+    //     TIME.text + TIME.count,
+    //     {
+    //       fontFamily: Keys.UI.Font,
+    //       fontSize: `${TIME.size}px`,
+    //       color: TIME.color,
+    //       align: "right",
+    //     }
+    //   );
+    //   this.SecondText.setOrigin(1, 0);
+    //   // Following https://blog.ourcade.co/posts/2020/phaser3-how-to-communicate-between-scenes/
+    //   // listen to 'update-score' event and call `updateScore()` when it fires
+    //   eventManager.on(Keys.Events.updateScore, this.updateScore, this);
+    //   // clean up when Scene is shutdown
+    //   this.events.on(Phaser.Scenes.Events.SHUTDOWN, () => {
+    //     eventManager.off(Keys.Events.updateScore);
+    //   });
+    //   eventManager.on(Keys.Events.playerHurt, this.updateHealth, this);
+    //   this.events.on(Phaser.Scenes.Events.SHUTDOWN, () => {
+    //     eventManager.off(Keys.Events.playerHurt);
+    //   });
+    //   eventManager.on(Keys.Events.gameOver, this.runGameOver, this);
+    //   this.events.on(Phaser.Scenes.Events.SHUTDOWN, () => {
+    //     eventManager.off(Keys.Events.gameOver);
+    //   });
+    //   eventManager.on(
+    //     Keys.Events.spawnBomb,
+    //     (scene) => {
+    //       const x =
+    //         scene.player.x < this.sys.game.config.width / 2
+    //           ? Phaser.Math.Between(
+    //               this.sys.game.config.width / 2,
+    //               this.sys.game.config.width
+    //             )
+    //           : Phaser.Math.Between(0, this.sys.game.config.width / 2);
+    //       this.spawn(Bomb, scene, x, 16);
+    //     },
+    //     this
+    //   );
+    //   this.events.on(Phaser.Scenes.Events.SHUTDOWN, () => {
+    //     eventManager.off(Keys.Events.spawnBomb);
+    //   });
+    //   eventManager.on(
+    //     Keys.Events.spawnBigBomb,
+    //     (scene) => {
+    //       const x =
+    //         scene.player.x < this.sys.game.config.width / 2
+    //           ? Phaser.Math.Between(0, this.sys.game.config.width / 2)
+    //           : Phaser.Math.Between(
+    //               this.sys.game.config.width / 2,
+    //               this.sys.game.config.width
+    //             );
+    //       const y =
+    //         scene.player.y < this.sys.game.config.height / 2
+    //           ? Phaser.Math.Between(0, this.sys.game.config.height / 2)
+    //           : Phaser.Math.Between(
+    //               this.sys.game.config.height / 2,
+    //               this.sys.game.config.height
+    //             );
+    //       this.spawn(BigBomb, scene, x, y);
+    //     },
+    //     this
+    //   );
+    //   this.events.on(Phaser.Scenes.Events.SHUTDOWN, () => {
+    //     eventManager.off(Keys.Events.spawnBigBomb);
+    //   });
+  }
 
-  //   this.scoreDisplay = this.add.text(16, 16, SCORE.text + SCORE.count, {
-  //     fontFamily: Keys.UI.Font,
-  //     fontSize: `${SCORE.size}px`,
-  //     color: SCORE.color,
-  //   });
+  create() {
+    const huntBack = this.add.nineslice(0, 0, Keys.Assets.UI, Keys.UI.CountContainer, 400, 200, 16, 16, 16, 16);
 
-  //   this.SecondText = this.add.text(
-  //     this.sys.game.config.width - 16,
-  //     16,
-  //     TIME.text + TIME.count,
-  //     {
-  //       fontFamily: Keys.UI.Font,
-  //       fontSize: `${TIME.size}px`,
-  //       color: TIME.color,
-  //       align: "right",
-  //     }
-  //   );
-  //   this.SecondText.setOrigin(1, 0);
+    const huntEmpty = this.add.group({
+      key: Keys.Assets.UI,
+      frame: Keys.UI.CountNegative,
+      repeat: 2,
+      setXY: { x: 48, y: 72, stepX: 72 },
+    });
 
-  //   // Following https://blog.ourcade.co/posts/2020/phaser3-how-to-communicate-between-scenes/
-  //   // listen to 'update-score' event and call `updateScore()` when it fires
-  //   eventManager.on(Keys.Events.updateScore, this.updateScore, this);
-  //   // clean up when Scene is shutdown
-  //   this.events.on(Phaser.Scenes.Events.SHUTDOWN, () => {
-  //     eventManager.off(Keys.Events.updateScore);
-  //   });
+    this.huntFull = this.add.group({
+      key: Keys.Assets.UI,
+      frame: Keys.UI.CountPositive,
+      repeat: 2,
+      setXY: { x: 48, y: 72, stepX: 72 },
+    });
 
-  //   eventManager.on(Keys.Events.playerHurt, this.updateHealth, this);
-  //   this.events.on(Phaser.Scenes.Events.SHUTDOWN, () => {
-  //     eventManager.off(Keys.Events.playerHurt);
-  //   });
-
-  //   eventManager.on(Keys.Events.gameOver, this.runGameOver, this);
-  //   this.events.on(Phaser.Scenes.Events.SHUTDOWN, () => {
-  //     eventManager.off(Keys.Events.gameOver);
-  //   });
-
-  //   eventManager.on(
-  //     Keys.Events.spawnBomb,
-  //     (scene) => {
-  //       const x =
-  //         scene.player.x < this.sys.game.config.width / 2
-  //           ? Phaser.Math.Between(
-  //               this.sys.game.config.width / 2,
-  //               this.sys.game.config.width
-  //             )
-  //           : Phaser.Math.Between(0, this.sys.game.config.width / 2);
-  //       this.spawn(Bomb, scene, x, 16);
-  //     },
-  //     this
-  //   );
-  //   this.events.on(Phaser.Scenes.Events.SHUTDOWN, () => {
-  //     eventManager.off(Keys.Events.spawnBomb);
-  //   });
-
-  //   eventManager.on(
-  //     Keys.Events.spawnBigBomb,
-  //     (scene) => {
-  //       const x =
-  //         scene.player.x < this.sys.game.config.width / 2
-  //           ? Phaser.Math.Between(0, this.sys.game.config.width / 2)
-  //           : Phaser.Math.Between(
-  //               this.sys.game.config.width / 2,
-  //               this.sys.game.config.width
-  //             );
-  //       const y =
-  //         scene.player.y < this.sys.game.config.height / 2
-  //           ? Phaser.Math.Between(0, this.sys.game.config.height / 2)
-  //           : Phaser.Math.Between(
-  //               this.sys.game.config.height / 2,
-  //               this.sys.game.config.height
-  //             );
-  //       this.spawn(BigBomb, scene, x, y);
-  //     },
-  //     this
-  //   );
-  //   this.events.on(Phaser.Scenes.Events.SHUTDOWN, () => {
-  //     eventManager.off(Keys.Events.spawnBigBomb);
-  //   });
-  // }
-
-  // create() {
-  //   // Empty outlines
-  //   const container = this.add.group({
-  //     key: Keys.UI.HealthContainer,
-  //     repeat: 2,
-  //     setXY: { x: 48, y: 72, stepX: 72 },
-  //   });
-
-  //   this.hearts = this.add.group({
-  //     key: Keys.UI.HealthIcon,
-  //     repeat: 2,
-  //     setXY: { x: 48, y: 72, stepX: 72 },
-  //   });
+    this.huntContainer = this.add.container(0, 0, [huntBack, huntEmpty, this.huntFull]);
+  }
 
   //   this.anims.create({
   //     key: Keys.Assets.Explosion,
