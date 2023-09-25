@@ -23,6 +23,7 @@ export const Assets = {
 // Animation names
 export const Animations = {
   DeerJump: 'deerJump',
+  KnockBack: 'knockBack',
   BloodSplash: 'bloodSplash',
   DirtBurts: 'dirtBurst',
   MuzzleFlash: 'muzzleFlash',
@@ -43,9 +44,9 @@ export const UI = {
 
 export const Events = {
   updateScore: 'update-score',
-  moveGun: 'move-gun',
   jumpDeer: 'jump-deer',
-  shot: 'shot-event',
+  moveGun: 'move-gun',
+  shootGun: 'shoot-gun',
   hitDeer: 'hit-deer',
   hitDirt: 'hiy-dirt',
   timeoutMessage: 'timeout-message',

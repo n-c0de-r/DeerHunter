@@ -4,7 +4,7 @@ import eventManager from '../classes/EventManager';
 import * as Keys from '../data/keys';
 import Settings from '../data/settings';
 
-// import Gun from '../classes/gun';
+import Gun from '../classes/gun';
 
 export default class extends Phaser.Scene {
   constructor() {
@@ -20,7 +20,7 @@ export default class extends Phaser.Scene {
     const background = this.add.image(0, 0, Keys.Assets.Background);
     background.setOrigin(0, 0);
     background.setDisplaySize(this.sys.game.config.width, this.sys.game.config.height);
-    this.scene.run(Keys.Scenes.UI);
+    // this.scene.run(Keys.Scenes.UI);
 
     this.cameras.main.fadeIn(Settings.Cam_FadeTime);
   }
@@ -31,7 +31,7 @@ export default class extends Phaser.Scene {
       this.scene.start(Keys.Scenes.Splash);
     });
 
-    // this.gun = new Gun();
+    this.gun = new Gun(this, 0, 0);
   }
 
   update(time, delta) {
