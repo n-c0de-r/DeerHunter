@@ -5,8 +5,12 @@
   "author": "leandro cabrera <leandcabrera@gmail.com>",
   "main": "src/index.js",
   "scripts": {
-    "start": "webpack-dev-server --config webpack/base.js --open",
-    "build": "webpack --config webpack/prod.js "
+    "build": "npm run build:work",
+    "build:work": "webpack --config webpack/prod.js ",
+    "build:home": "SET NODE_OPTIONS=--openssl-legacy-provider && webpack --config webpack/prod.js",
+    "start": "npm run start:work",
+    "start:home": "SET NODE_OPTIONS=--openssl-legacy-provider && webpack-dev-server --config webpack/base.js --open",
+    "start:work": "webpack-dev-server --config webpack/base.js --open"
   },
   "license": "MIT",
   "devDependencies": {
