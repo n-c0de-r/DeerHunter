@@ -2,7 +2,6 @@ import Phaser from 'phaser';
 import WebFont from 'webfontloader';
 
 import * as Keys from '../data/keys';
-import Settings from '../data/settings';
 
 import BackgroundImage from '../../assets/sprites/background.jpg';
 
@@ -21,14 +20,6 @@ export default class Boots extends Phaser.Scene {
   }
 
   init(data) {
-    // Enables different move behavior depending on device
-    // https://phaser.discourse.group/t/check-if-mobile/305/5
-    if (this.sys.game.device.os.desktop) {
-      Settings.Is_Desktop = true;
-    } else {
-      Settings.Is_Desktop = false;
-    }
-
     this.fontsReady = false;
     this.fontsLoaded = this.fontsLoaded.bind(this);
     this.add.text(100, 100, 'loading fonts...');

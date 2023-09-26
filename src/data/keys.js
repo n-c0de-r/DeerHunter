@@ -37,7 +37,7 @@ export const UI = {
   CountPositive: 'scoreIcon_active.png',
   CountNegative: 'scoreIcon_inactive.png',
   BulletsCounter: 'BulletsCounter',
-  Bullet: 'Bullet',
+  Bullet: 'bullet_small.png',
   ButtonAgain: 'ButtonAgain',
   CTAMessage: 'CTAMessage',
 };
@@ -47,6 +47,7 @@ export const Events = {
   jumpDeer: 'jump-deer',
   moveGun: 'move-gun',
   shootGun: 'shoot-gun',
+  emptyGun: 'empty-gun',
   hitDeer: 'hit-deer',
   hitDirt: 'hiy-dirt',
   timeoutMessage: 'timeout-message',

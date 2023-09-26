@@ -2,25 +2,22 @@ import Phaser from 'phaser';
 import eventManager from './EventManager';
 
 import * as Keys from '../data/keys';
-import Settings from '../data/settings';
 
 const MIDPOINT = { x: 0, y: 0 };
 const MOVE_RANGE = 50;
 
-export default class GUN extends Phaser.Physics.Arcade.Sprite {
+export default class Gun extends Phaser.Physics.Arcade.Sprite {
   /**
-   * Instanciates a a new player object.
+   * Instanciates a a new gun object.
    * @param {Phaser.Scene} scene The phase scene this belongs to.
-   * @param {number} x The x position to spawn at.
-   * @param {number} y The y position to spawn at.
    */
-  constructor(scene, x, y) {
-    super(scene, (x = scene.sys.game.config.width / 2), (y = scene.sys.game.config.height - MOVE_RANGE), Keys.Assets.Gun, 'Gun1.png');
+  constructor(scene, bullets) {
+    super(scene, scene.sys.game.config.width / 2, scene.sys.game.config.height - MOVE_RANGE, Keys.Assets.Gun, 'Gun1.png');
     scene.add.existing(this);
 
-    MIDPOINT.x = scene.sys.game.config.width / 2;
-    MIDPOINT.y = scene.sys.game.config.height - MOVE_RANGE;
-    this.bullets = Settings.Amount_Of_Bullets;
+    MIDPOINT.x = this.x; //scene.sys.game.config.width / 2;
+    MIDPOINT.y = this.y; //scene.sys.game.config.height - MOVE_RANGE;
+    this.bullets = bullets;
     this.isReloading = false;
   }
 
@@ -55,12 +52,13 @@ export default class GUN extends Phaser.Physics.Arcade.Sprite {
    */
   shoot(x, y) {
     if (!this.isReloading && this.bullets > 0) {
-      // this.bullets -= 1;
+      this.bullets -= 1;
       this.play(Keys.Animations.KnockBack);
       this.isReloading = true;
-      console.log('bang');
+      eventManager.emit(Keys.Events.shootGun, true);
       // https://blog.ourcade.co/posts/2020/phaser-3-fade-out-scene-transition/ DELAY
       this.scene.time.delayedCall(1000, () => {
+        if (this.bullets <= 0) eventManager.emit(Keys.Events.emptyGun);
         this.isReloading = false;
       });
     }
