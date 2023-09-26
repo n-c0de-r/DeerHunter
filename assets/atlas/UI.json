@@ -24,48 +24,48 @@
         "y": 0.5
       }
     },
-    "deer.png": {
+    "scope.png": {
       "frame": {
         "x": 510,
         "y": 0,
-        "w": 386,
-        "h": 454
+        "w": 400,
+        "h": 407
       },
-      "rotated": true,
+      "rotated": false,
       "trimmed": false,
       "spriteSourceSize": {
         "x": 0,
         "y": 0,
-        "w": 386,
-        "h": 454
+        "w": 400,
+        "h": 407
       },
       "sourceSize": {
-        "w": 386,
-        "h": 454
+        "w": 400,
+        "h": 407
       },
       "pivot": {
         "x": 0.5,
         "y": 0.5
       }
     },
-    "scope.png": {
+    "logo.png": {
       "frame": {
         "x": 0,
         "y": 130,
-        "w": 400,
-        "h": 407
+        "w": 390,
+        "h": 176
       },
-      "rotated": true,
+      "rotated": false,
       "trimmed": false,
       "spriteSourceSize": {
         "x": 0,
         "y": 0,
-        "w": 400,
-        "h": 407
+        "w": 390,
+        "h": 176
       },
       "sourceSize": {
-        "w": 400,
-        "h": 407
+        "w": 390,
+        "h": 176
       },
       "pivot": {
         "x": 0.5,
@@ -74,7 +74,7 @@
     },
     "scoreIcon_active.png": {
       "frame": {
-        "x": 407,
+        "x": 390,
         "y": 130,
         "w": 90,
         "h": 116
@@ -96,9 +96,33 @@
         "y": 0.5
       }
     },
+    "bullet_small.png": {
+      "frame": {
+        "x": 480,
+        "y": 130,
+        "w": 22,
+        "h": 58
+      },
+      "rotated": false,
+      "trimmed": true,
+      "spriteSourceSize": {
+        "x": 1,
+        "y": 0,
+        "w": 22,
+        "h": 58
+      },
+      "sourceSize": {
+        "w": 23,
+        "h": 58
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
     "scoreIcon_inactive.png": {
       "frame": {
-        "x": 407,
+        "x": 390,
         "y": 246,
         "w": 90,
         "h": 116
@@ -120,14 +144,62 @@
         "y": 0.5
       }
     },
+    "deer.png": {
+      "frame": {
+        "x": 0,
+        "y": 306,
+        "w": 386,
+        "h": 454
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 386,
+        "h": 454
+      },
+      "sourceSize": {
+        "w": 386,
+        "h": 454
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    "bullet_large.png": {
+      "frame": {
+        "x": 386,
+        "y": 362,
+        "w": 43,
+        "h": 115
+      },
+      "rotated": false,
+      "trimmed": true,
+      "spriteSourceSize": {
+        "x": 2,
+        "y": 1,
+        "w": 43,
+        "h": 115
+      },
+      "sourceSize": {
+        "w": 46,
+        "h": 116
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
     "ui_button_Reload.png": {
       "frame": {
-        "x": 407,
-        "y": 362,
+        "x": 910,
+        "y": 0,
         "w": 360,
         "h": 78
       },
-      "rotated": true,
+      "rotated": false,
       "trimmed": true,
       "spriteSourceSize": {
         "x": 0,
@@ -144,58 +216,10 @@
         "y": 0.5
       }
     },
-    "bullet_small.png": {
-      "frame": {
-        "x": 485,
-        "y": 362,
-        "w": 22,
-        "h": 58
-      },
-      "rotated": false,
-      "trimmed": true,
-      "spriteSourceSize": {
-        "x": 1,
-        "y": 0,
-        "w": 22,
-        "h": 58
-      },
-      "sourceSize": {
-        "w": 23,
-        "h": 58
-      },
-      "pivot": {
-        "x": 0.5,
-        "y": 0.5
-      }
-    },
-    "logo.png": {
-      "frame": {
-        "x": 0,
-        "y": 530,
-        "w": 390,
-        "h": 176
-      },
-      "rotated": false,
-      "trimmed": false,
-      "spriteSourceSize": {
-        "x": 0,
-        "y": 0,
-        "w": 390,
-        "h": 176
-      },
-      "sourceSize": {
-        "w": 390,
-        "h": 176
-      },
-      "pivot": {
-        "x": 0.5,
-        "y": 0.5
-      }
-    },
     "tap_to_shoot.png": {
       "frame": {
-        "x": 0,
-        "y": 706,
+        "x": 1270,
+        "y": 0,
         "w": 350,
         "h": 161
       },
@@ -216,34 +240,10 @@
         "y": 0.5
       }
     },
-    "ui_button_Replay.png": {
-      "frame": {
-        "x": 350,
-        "y": 706,
-        "w": 164,
-        "h": 54
-      },
-      "rotated": true,
-      "trimmed": false,
-      "spriteSourceSize": {
-        "x": 0,
-        "y": 0,
-        "w": 164,
-        "h": 54
-      },
-      "sourceSize": {
-        "w": 164,
-        "h": 54
-      },
-      "pivot": {
-        "x": 0.5,
-        "y": 0.5
-      }
-    },
     "dog.png": {
       "frame": {
-        "x": 0,
-        "y": 867,
+        "x": 910,
+        "y": 78,
         "w": 295,
         "h": 290
       },
@@ -264,14 +264,38 @@
         "y": 0.5
       }
     },
+    "ui_button_Replay.png": {
+      "frame": {
+        "x": 1620,
+        "y": 0,
+        "w": 164,
+        "h": 54
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 164,
+        "h": 54
+      },
+      "sourceSize": {
+        "w": 164,
+        "h": 54
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
     "ui_button_Continue.png": {
       "frame": {
-        "x": 295,
-        "y": 867,
+        "x": 1784,
+        "y": 0,
         "w": 148,
         "h": 53
       },
-      "rotated": true,
+      "rotated": false,
       "trimmed": false,
       "spriteSourceSize": {
         "x": 0,
@@ -287,30 +311,6 @@
         "x": 0.5,
         "y": 0.5
       }
-    },
-    "bullet_large.png": {
-      "frame": {
-        "x": 0,
-        "y": 1157,
-        "w": 43,
-        "h": 115
-      },
-      "rotated": false,
-      "trimmed": true,
-      "spriteSourceSize": {
-        "x": 2,
-        "y": 1,
-        "w": 43,
-        "h": 115
-      },
-      "sourceSize": {
-        "w": 46,
-        "h": 116
-      },
-      "pivot": {
-        "x": 0.5,
-        "y": 0.5
-      }
     }
   },
   "meta": {
@@ -319,8 +319,8 @@
     "image": "UI.png",
     "format": "RGBA8888",
     "size": {
-      "w": 964,
-      "h": 1272
+      "w": 1932,
+      "h": 760
     },
     "scale": 1
   }

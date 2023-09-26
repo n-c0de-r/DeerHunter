@@ -1,191 +1,191 @@
 {
   "frames": {
-    "2.png": {
+    "Blood2.png": {
       "frame": {
         "x": 0,
         "y": 0,
-        "w": 523,
-        "h": 703
+        "w": 262,
+        "h": 352
       },
       "rotated": false,
       "trimmed": true,
       "spriteSourceSize": {
         "x": 0,
-        "y": 48,
-        "w": 523,
-        "h": 703
+        "y": 24,
+        "w": 262,
+        "h": 352
       },
       "sourceSize": {
-        "w": 523,
-        "h": 751
+        "w": 262,
+        "h": 376
       },
       "pivot": {
         "x": 0.5,
         "y": 0.5
       }
     },
-    "3.png": {
+    "Blood3.png": {
       "frame": {
         "x": 0,
-        "y": 703,
-        "w": 551,
-        "h": 699
+        "y": 352,
+        "w": 276,
+        "h": 350
+      },
+      "rotated": false,
+      "trimmed": true,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 26,
+        "w": 276,
+        "h": 350
+      },
+      "sourceSize": {
+        "w": 276,
+        "h": 376
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    "Blood4.png": {
+      "frame": {
+        "x": 262,
+        "y": 0,
+        "w": 273,
+        "h": 349
       },
       "rotated": false,
       "trimmed": true,
       "spriteSourceSize": {
         "x": 0,
         "y": 53,
-        "w": 551,
-        "h": 699
+        "w": 273,
+        "h": 349
       },
       "sourceSize": {
-        "w": 551,
-        "h": 752
+        "w": 273,
+        "h": 423
       },
       "pivot": {
         "x": 0.5,
         "y": 0.5
       }
     },
-    "4.png": {
+    "Blood6.png": {
       "frame": {
-        "x": 523,
-        "y": 0,
-        "w": 545,
-        "h": 699
+        "x": 0,
+        "y": 702,
+        "w": 273,
+        "h": 349
       },
       "rotated": false,
       "trimmed": true,
       "spriteSourceSize": {
         "x": 0,
-        "y": 106,
-        "w": 545,
-        "h": 699
+        "y": 53,
+        "w": 273,
+        "h": 349
       },
       "sourceSize": {
-        "w": 545,
-        "h": 846
+        "w": 273,
+        "h": 423
       },
       "pivot": {
         "x": 0.5,
         "y": 0.5
       }
     },
-    "6.png": {
+    "Blood7.png": {
       "frame": {
         "x": 0,
-        "y": 1402,
-        "w": 545,
-        "h": 699
-      },
-      "rotated": true,
-      "trimmed": true,
-      "spriteSourceSize": {
-        "x": 0,
-        "y": 106,
-        "w": 545,
-        "h": 699
-      },
-      "sourceSize": {
-        "w": 545,
-        "h": 846
-      },
-      "pivot": {
-        "x": 0.5,
-        "y": 0.5
-      }
-    },
-    "7.png": {
-      "frame": {
-        "x": 551,
-        "y": 699,
-        "w": 545,
-        "h": 696
+        "y": 1051,
+        "w": 273,
+        "h": 348
       },
       "rotated": false,
       "trimmed": true,
       "spriteSourceSize": {
         "x": 0,
-        "y": 109,
-        "w": 545,
-        "h": 696
+        "y": 54,
+        "w": 273,
+        "h": 348
       },
       "sourceSize": {
-        "w": 545,
-        "h": 846
+        "w": 273,
+        "h": 423
       },
       "pivot": {
         "x": 0.5,
         "y": 0.5
       }
     },
-    "5.png": {
+    "Blood5.png": {
       "frame": {
-        "x": 1068,
-        "y": 0,
-        "w": 535,
-        "h": 696
+        "x": 0,
+        "y": 1399,
+        "w": 268,
+        "h": 348
       },
       "rotated": false,
       "trimmed": true,
       "spriteSourceSize": {
         "x": 0,
-        "y": 109,
-        "w": 535,
-        "h": 696
+        "y": 54,
+        "w": 268,
+        "h": 348
       },
       "sourceSize": {
-        "w": 545,
-        "h": 846
+        "w": 273,
+        "h": 423
       },
       "pivot": {
         "x": 0.5,
         "y": 0.5
       }
     },
-    "1.png": {
+    "Blood1.png": {
       "frame": {
-        "x": 1603,
-        "y": 0,
-        "w": 374,
-        "h": 508
+        "x": 0,
+        "y": 1747,
+        "w": 187,
+        "h": 251
       },
       "rotated": false,
       "trimmed": true,
       "spriteSourceSize": {
         "x": 0,
-        "y": 8,
-        "w": 374,
-        "h": 508
+        "y": 4,
+        "w": 187,
+        "h": 251
       },
       "sourceSize": {
-        "w": 394,
-        "h": 574
+        "w": 197,
+        "h": 287
       },
       "pivot": {
         "x": 0.5,
         "y": 0.5
       }
     },
-    "8.png": {
+    "Blood8.png": {
       "frame": {
-        "x": 699,
-        "y": 1395,
-        "w": 545,
-        "h": 693
+        "x": 268,
+        "y": 1399,
+        "w": 273,
+        "h": 347
       },
-      "rotated": true,
+      "rotated": false,
       "trimmed": true,
       "spriteSourceSize": {
         "x": 0,
-        "y": 109,
-        "w": 545,
-        "h": 693
+        "y": 54,
+        "w": 273,
+        "h": 347
       },
       "sourceSize": {
-        "w": 545,
-        "h": 846
+        "w": 273,
+        "h": 423
       },
       "pivot": {
         "x": 0.5,
@@ -199,8 +199,8 @@
     "image": "Blood.png",
     "format": "RGBA8888",
     "size": {
-      "w": 1977,
-      "h": 1947
+      "w": 541,
+      "h": 1998
     },
     "scale": 1
   }

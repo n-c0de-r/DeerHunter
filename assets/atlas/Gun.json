@@ -31,7 +31,7 @@
         "w": 254,
         "h": 193
       },
-      "rotated": true,
+      "rotated": false,
       "trimmed": true,
       "spriteSourceSize": {
         "x": 56,
@@ -55,8 +55,8 @@
     "image": "Gun.png",
     "format": "RGBA8888",
     "size": {
-      "w": 225,
-      "h": 543
+      "w": 254,
+      "h": 482
     },
     "scale": 1
   }

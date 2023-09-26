@@ -15,13 +15,13 @@ const gameConfig = {
     autoCenter: Phaser.Scale.CENTER_BOTH,
     localStorageName: 'pictureHunter',
   },
-  // physics: {
-  //   default: 'arcade',
-  //   arcade: {
-  //     gravity: { y: 200 },
-  //     // debug: true,
-  //   },
-  // }, // Probably not needed here
+  physics: {
+    default: 'arcade',
+    arcade: {
+      gravity: { y: 0 },
+      debug: true,
+    },
+  }, // Probably not needed here
   scene: [Boot, Game, Splash, UI],
 };
 
