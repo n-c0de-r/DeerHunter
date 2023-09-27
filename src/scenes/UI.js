@@ -9,6 +9,9 @@ import Gun from '../classes/gun';
 export default class UI extends Phaser.Scene {
   constructor() {
     super({ key: Keys.Scenes.UI });
+
+    this.CTAtimer = 0;
+    this.isTimerRunning = false;
   }
 
   init(data) {
@@ -17,15 +20,27 @@ export default class UI extends Phaser.Scene {
     this.setInputs(this.sys.game.device.os.desktop, this);
 
     this.cameras.main.fadeIn(Settings.Cam_FadeTime);
-
-    eventManager.on(Keys.Events.shootGun, this.updateBullets, this);
-    this.events.on(Phaser.Scenes.Events.SHUTDOWN, () => {
-      eventManager.off(Keys.Events.shootGun, this.updateBullets, this);
+    this.time.delayedCall(Settings.Cam_FadeTime * 3, () => {
+      this.isTimerRunning = true;
     });
 
-    eventManager.on(Keys.Events.hideCTA, this.hideCTA, this);
+    eventManager.on(
+      Keys.Events.shootGun,
+      () => {
+        this.updateBullets();
+        this.hideCTA();
+      },
+      this
+    );
     this.events.on(Phaser.Scenes.Events.SHUTDOWN, () => {
-      eventManager.off(Keys.Events.hideCTA, this.hideCTA, this);
+      eventManager.off(
+        Keys.Events.shootGun,
+        () => {
+          this.updateBullets();
+          this.hideCTA();
+        },
+        this
+      );
     });
 
     eventManager.on(Keys.Events.hitDeer, this.updateCounter, this);
@@ -60,8 +75,10 @@ export default class UI extends Phaser.Scene {
       setXY: { x: this.sys.game.config.width - 32, y: this.sys.game.config.height - 72, stepX: -32 },
     });
 
-    this.CTA = this.add.image(300, 100, Keys.Assets.UI, Keys.UI.CTAMessage);
+    this.CTA = this.add.image(this.sys.game.config.width - 300, 100, Keys.Assets.UI, Keys.UI.CTAMessage);
     this.CTA.setVisible(false);
+    this.CTA.setScale(0);
+
     this.gun = new Gun(this, Settings.Amount_Of_Bullets); // Maybe UI for overlay?
   }
 
@@ -70,6 +87,11 @@ export default class UI extends Phaser.Scene {
     if (!this.deerIcons.getFirstDead()) {
       eventManager.emit(Keys.Events.killHattrick);
     }
+
+    if (!this.isTimerRunning) return;
+
+    this.CTAtimer -= delta;
+    if (this.CTAtimer <= 0) this.displayCTA();
   }
 
   // UI RELATED FUNCTIONS
@@ -105,11 +127,54 @@ export default class UI extends Phaser.Scene {
     icon.fx.reset();
   }
 
+  /**
+   * Shows the CTA
+   */
   displayCTA() {
-    // TODO: implement CTA
+    // Just in case some event calls here
+    if (this.CTA.visible) return;
+
+    this.CTAtimer = 1;
+    this.CTA.setVisible(true);
+    this.CTAtween = this.tweens.chain({
+      targets: this.CTA,
+      tweens: [
+        {
+          scale: { from: 0, to: 1 },
+          duration: 500,
+          ease: 'Sine.in',
+        },
+        {
+          scale: 1.25,
+          duration: 700,
+          ease: 'Quad.inOut',
+          yoyo: true,
+          repeat: -1,
+        },
+      ],
+    });
   }
 
-  hideCTA() {}
+  /**
+   * Hides the CTA
+   */
+  hideCTA() {
+    this.CTAtimer = Settings.CTA_On_Idle_Time;
+    // Don't bother if all is off :P
+    if (!this.CTA.visible) return;
+
+    this.CTAtween.destroy();
+    this.CTAtween = this.tweens.add({
+      targets: this.CTA,
+      scale: 0,
+      duration: 300,
+      ease: 'Sine.out',
+      onComplete: () => {
+        this.CTAtween.destroy();
+        this.CTA.setVisible(false);
+      },
+    });
+  }
 
   /**
    * Sets input handling for the scene.

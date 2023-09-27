@@ -53,4 +53,6 @@ export const Events = {
   killHattrick: 'kill-hattrick',
   timeoutMessage: 'timeout-message',
   timeoutGame: 'timeout-game',
+  stopTimer: 'stop-timer',
+  resumeTimer: 'resume-timer',
 };

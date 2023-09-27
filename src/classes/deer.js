@@ -41,7 +41,6 @@ export default class Deer extends Phaser.Physics.Arcade.Sprite {
     if (Settings.Blood) {
       this.play(Keys.Animations.BloodSplash);
       this.on(Phaser.Animations.Events.ANIMATION_COMPLETE, () => {
-        eventManager.off(Keys.Events.shootGun, this.hit, this);
         this.destroy();
       });
     } else {
@@ -56,5 +55,6 @@ export default class Deer extends Phaser.Physics.Arcade.Sprite {
         },
       });
     }
+    eventManager.off(Keys.Events.shootGun, this.hit, this);
   }
 }
