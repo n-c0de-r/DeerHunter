@@ -17,6 +17,11 @@ export default class UI extends Phaser.Scene {
       eventManager.off(Keys.Events.shootGun, this.updateBullets, this);
     });
 
+    eventManager.on(Keys.Events.hideCTA, this.hideCTA, this);
+    this.events.on(Phaser.Scenes.Events.SHUTDOWN, () => {
+      eventManager.off(Keys.Events.hideCTA, this.hideCTA, this);
+    });
+
     eventManager.on(Keys.Events.hitDeer, this.updateCounter, this);
     this.events.on(Phaser.Scenes.Events.SHUTDOWN, () => {
       eventManager.off(Keys.Events.hitDeer, this.updateCounter, this);
@@ -48,12 +53,15 @@ export default class UI extends Phaser.Scene {
       repeat: Settings.Amount_Of_Bullets - 1,
       setXY: { x: this.sys.game.config.width - 32, y: this.sys.game.config.height - 72, stepX: -32 },
     });
+
+    this.CTA = this.add.image(300, 100, Keys.Assets.UI, Keys.UI.CTAMessage);
+    this.CTA.setVisible(false);
   }
 
   update(time, delta) {
     // All icons are on, so 3 deers killed :(
     if (!this.deerIcons.getFirstDead()) {
-      eventManager.emit(Keys.Events.killHattrick, Keys.Scenes.Bonus, true);
+      eventManager.emit(Keys.Events.killHattrick);
     }
   }
 
@@ -91,4 +99,6 @@ export default class UI extends Phaser.Scene {
   displayCTA() {
     // TODO: implement CTA
   }
+
+  hideCTA() {}
 }

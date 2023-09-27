@@ -59,7 +59,7 @@ export default class Gun extends Phaser.Physics.Arcade.Sprite {
 
       // https://blog.ourcade.co/posts/2020/phaser-3-fade-out-scene-transition/ DELAY
       this.scene.time.delayedCall(1000, () => {
-        if (this.bullets <= 0) eventManager.emit(Keys.Events.emptyGun, Keys.Scenes.Results, false);
+        if (this.bullets <= 0) eventManager.emit(Keys.Events.emptyGun);
         this.isReloading = false;
       });
     }

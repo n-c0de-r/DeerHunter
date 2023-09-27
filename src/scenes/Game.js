@@ -46,26 +46,25 @@ export default class extends Phaser.Scene {
       eventManager.off(Keys.Events.timeoutGame, this.transitionScenes, this);
     });
 
-    eventManager.on(Keys.Events.killHattrick, this.transitionScenes, this);
+    eventManager.on(Keys.Events.killHattrick, this.playBonus, this);
     this.events.on(Phaser.Scenes.Events.SHUTDOWN, () => {
-      eventManager.off(Keys.Events.killHattrick, this.transitionScenes, this);
+      eventManager.off(Keys.Events.killHattrick, this.playBonus, this);
     });
   }
 
   create(data) {
-    this.deer1 = new Deer(this, 400, 300);
-    this.deer2 = new Deer(this, 800, 600);
-    this.deer3 = new Deer(this, 600, 100);
+    this.deer = new Deer(this, 400, 300);
+    this.deer = new Deer(this, 800, 600);
+    this.deer = new Deer(this, 600, 100);
     this.gun = new Gun(this, Settings.Amount_Of_Bullets); // Maybe UI for overlay?
   }
 
   update(time, delta) {
     if (!this.isTimerRunning) return;
     this.timePassed += delta;
-    console.log('update ~ this.timePassed:', this.timePassed);
 
     if (this.timePassed < Settings.Game_Time) return;
-    eventManager.emit(Keys.Events.timeoutGame, Keys.Scenes.Results, false);
+    eventManager.emit(Keys.Events.timeoutGame);
   }
 
   // SCENE FUNCTIONS
@@ -197,17 +196,19 @@ export default class extends Phaser.Scene {
     });
   }
 
+  playBonus() {}
+
   /**
    * Transitions to next scene and fades out the camera.
    * @param {Phaser.Scene} nextScene The scene to transition to.
    * @param {boolean} success Determinates if the overall result will be good.
    */
-  transitionScenes(nextScene, success) {
+  transitionScenes(success) {
     // https://blog.ourcade.co/posts/2020/phaser-3-fade-out-scene-transition/ Scene change
     this.cameras.main.fadeOut(Settings.Cam_FadeTime);
     this.time.delayedCall(Settings.Cam_FadeTime, () => {
       this.scene.manager.scenes.forEach((scene) => scene.scene.stop());
-      this.scene.start(nextScene, { success });
+      this.scene.start(Keys.Scenes.Results, { success });
     });
   }
 }

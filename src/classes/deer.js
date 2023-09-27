@@ -2,6 +2,7 @@ import Phaser from 'phaser';
 import eventManager from './EventManager';
 
 import * as Keys from '../data/keys';
+import Settings from '../data/settings';
 
 const HIT_BOX_SIZE = 128;
 
@@ -16,7 +17,6 @@ export default class Deer extends Phaser.Physics.Arcade.Sprite {
     super(scene, x, y, Keys.Assets.Deer, 'deerJump15.png');
     scene.add.existing(this);
     scene.physics.world.enable(this);
-    this.isAlive = true;
     this.resetHitBounds();
     this.setHitListener();
   }
@@ -35,9 +35,11 @@ export default class Deer extends Phaser.Physics.Arcade.Sprite {
   }
 
   hit(x, y) {
+    console.log(this);
     if (!Phaser.Geom.Rectangle.Contains(this.body, x, y)) return;
 
-    this.play(Keys.Animations.BloodSplash);
+    if (Settings.Blood) this.play(Keys.Animations.BloodSplash);
+
     eventManager.emit(Keys.Events.hitDeer);
     this.on(Phaser.Animations.Events.ANIMATION_COMPLETE, () => {
       eventManager.off(Keys.Events.shootGun, this.hit, this);

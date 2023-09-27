@@ -42,7 +42,7 @@ export const UI = {
   BulletsCounter: 'BulletsCounter',
   Bullet: 'bullet_small.png',
   ButtonAgain: 'ButtonAgain',
-  CTAMessage: 'CTAMessage',
+  CTAMessage: 'tap_to_shoot.png',
 };
 
 export const Events = {
