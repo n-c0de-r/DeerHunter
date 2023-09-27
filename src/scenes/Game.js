@@ -75,7 +75,8 @@ export default class extends Phaser.Scene {
     this.physics.add.existing(zone, false);
     zone.body.moves = false;
     zone.setInteractive();
-    zone.on(Phaser.Input.Events.POINTER_UP, () => console.log(`${zone.name} hit`), this);
+    zone.on(Phaser.Input.Events.POINTER_UP, (pointer) => this.playAnim(pointer.x, pointer.y, Keys.Animations.DirtBurts, this), this);
+    //TODO: dirt animation
     return zone;
   }
 
@@ -109,4 +110,20 @@ export default class extends Phaser.Scene {
       );
     }
   }
+
+    /**
+   * Plays a given animation in the scene at a certain clicked position
+   * @param {number} x The clicked x position.
+   * @param {number} y The clicked y position.
+   * @param {string} key The name of the animation to play
+   */
+    playAnim(x, y, key) {
+      const yOffset = 100;
+      const invisibleSprite = this.add.sprite(x, y - yOffset, Keys.Assets.Deer, 'deerJump15.png');
+      invisibleSprite.setOrigin(0.5, 1);
+      invisibleSprite.play(key);
+  
+      invisibleSprite.on(Phaser.Animations.Events.ANIMATION_COMPLETE, () => {
+        invisibleSprite.destroy();
+      });
 }

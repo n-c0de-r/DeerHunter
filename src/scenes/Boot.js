@@ -82,5 +82,16 @@ export default class Boots extends Phaser.Scene {
       }),
       frameRate: 5,
     });
+
+    this.anims.create({
+      key: Keys.Animations.DirtBurts,
+      frames: this.anims.generateFrameNames(Keys.Assets.Effects, {
+        prefix: 'Dirt',
+        start: 1,
+        end: 5,
+        suffix: '.png',
+      }),
+      frameRate: 20,
+    });
   }
 }
