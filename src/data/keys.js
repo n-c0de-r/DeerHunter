@@ -7,6 +7,8 @@ export const Names = {
 export const Scenes = {
   Boot: 'BootScene',
   Game: 'GameScene',
+  Bonus: 'ScopeScene',
+  Results: 'ResultScene',
   Splash: 'SplashScene',
   UI: 'UI',
 };
@@ -18,6 +20,7 @@ export const Assets = {
   Effects: 'Effects',
   Gun: 'Gun',
   Deer: 'Deer',
+  Blood: 'Blood',
 };
 
 // Animation names
@@ -43,13 +46,11 @@ export const UI = {
 };
 
 export const Events = {
-  updateScore: 'update-score',
-  jumpDeer: 'jump-deer',
   moveGun: 'move-gun',
   shootGun: 'shoot-gun',
   emptyGun: 'empty-gun',
   hitDeer: 'hit-deer',
-  hitDirt: 'hiy-dirt',
+  killHattrick: 'kill-hattrick',
   timeoutMessage: 'timeout-message',
   timeoutGame: 'timeout-game',
 };

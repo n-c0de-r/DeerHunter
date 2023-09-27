@@ -2,6 +2,8 @@ import Phaser from 'phaser';
 
 import Boot from '../scenes/Boot';
 import Game from '../scenes/Game';
+import Bonus from '../scenes/Bonus';
+import Results from '../scenes/Results';
 import Splash from '../scenes/Splash';
 import UI from '../scenes/UI';
 
@@ -22,7 +24,7 @@ const gameConfig = {
       debug: true,
     },
   }, // Probably not needed here
-  scene: [Boot, Game, Splash, UI],
+  scene: [Boot, Game, Bonus, Results, Splash, UI],
 };
 
 export default gameConfig;

@@ -14,26 +14,32 @@ export default class UI extends Phaser.Scene {
 
     eventManager.on(Keys.Events.shootGun, this.updateBullets, this);
     this.events.on(Phaser.Scenes.Events.SHUTDOWN, () => {
-      eventManager.off(Keys.Events.shootGun);
+      eventManager.off(Keys.Events.shootGun, this.updateBullets, this);
     });
 
-    eventManager.on(Keys.Events.emptyGun, () => this.cameras.main.fadeOut(Settings.Cam_FadeTime / 2), this);
+    eventManager.on(Keys.Events.hitDeer, this.updateCounter, this);
+    this.events.on(Phaser.Scenes.Events.SHUTDOWN, () => {
+      eventManager.off(Keys.Events.hitDeer, this.updateCounter, this);
+    });
+
+    eventManager.on(Keys.Events.emptyGun, () => this.cameras.main.fadeOut(Settings.Cam_FadeTime), this);
+    eventManager.on(Keys.Events.timeoutGame, () => this.cameras.main.fadeOut(Settings.Cam_FadeTime), this);
   }
 
-  create() {
+  create(data) {
     const counterBack = this.add.nineslice(0, 0, Keys.Assets.UI, Keys.UI.CountContainer, 304, 150, 16, 16, 16, 16).setOrigin(0, 0);
 
     this.deerIcons = this.add.group({
       key: Keys.Assets.UI,
       frame: Keys.UI.CountPositive,
-      repeat: 2,
+      repeat: Settings.Amount_Of_Deer - 1,
       setXY: { x: 56, y: 72, stepX: 96 },
       active: false,
     });
     // https://labs.phaser.io/view.html?src=src/fx\colormatrix\colormatrix%20fx.js
     this.deerIcons.children.getArray().forEach((icon) => {
-      const fx = icon.preFX.addColorMatrix();
-      fx.blackWhite(); // No 2 assets, just set effects to grayscale
+      icon.fx = icon.preFX.addColorMatrix();
+      icon.fx.blackWhite(); // No 2 assets, just set effects to grayscale
     });
 
     this.bullets = this.add.group({
@@ -43,6 +49,15 @@ export default class UI extends Phaser.Scene {
       setXY: { x: this.sys.game.config.width - 32, y: this.sys.game.config.height - 72, stepX: -32 },
     });
   }
+
+  update(time, delta) {
+    // All icons are on, so 3 deers killed :(
+    if (!this.deerIcons.getFirstDead()) {
+      eventManager.emit(Keys.Events.killHattrick, Keys.Scenes.Bonus, true);
+    }
+  }
+
+  // UI RELATED FUNCTIONS
 
   /**
    * Updates the displayed amount of bullets.
@@ -64,8 +79,13 @@ export default class UI extends Phaser.Scene {
     });
   }
 
+  /**
+   * Updates the counter display
+   */
   updateCounter() {
-    // TODO: implement this
+    const icon = this.deerIcons.getFirstDead();
+    icon.setActive(true);
+    icon.fx.reset();
   }
 
   displayCTA() {

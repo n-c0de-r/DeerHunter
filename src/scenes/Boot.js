@@ -13,6 +13,8 @@ import EffectsAtlas from '../../assets/atlas/Effects.png';
 import EffectsJson from '../../assets/atlas/Effects.json';
 import GunAtlas from '../../assets/atlas/Gun.png';
 import GunJson from '../../assets/atlas/Gun.json';
+import BloodAtlas from '../../assets/atlas/Blood.png';
+import BloodJson from '../../assets/atlas/Blood.json';
 
 export default class Boots extends Phaser.Scene {
   constructor() {
@@ -40,6 +42,7 @@ export default class Boots extends Phaser.Scene {
     this.load.atlas(Keys.Assets.Deer, DeerAtlas, DeerJson);
     this.load.atlas(Keys.Assets.Effects, EffectsAtlas, EffectsJson);
     this.load.atlas(Keys.Assets.Gun, GunAtlas, GunJson);
+    this.load.atlas(Keys.Assets.Blood, BloodAtlas, BloodJson);
   }
 
   create(data) {
@@ -89,6 +92,17 @@ export default class Boots extends Phaser.Scene {
         prefix: 'Dirt',
         start: 1,
         end: 5,
+        suffix: '.png',
+      }),
+      frameRate: 20,
+    });
+
+    this.anims.create({
+      key: Keys.Animations.BloodSplash,
+      frames: this.anims.generateFrameNames(Keys.Assets.Blood, {
+        prefix: 'Blood',
+        start: 1,
+        end: 8,
         suffix: '.png',
       }),
       frameRate: 20,
