@@ -4,12 +4,18 @@ import eventManager from '../classes/EventManager';
 import * as Keys from '../data/keys';
 import Settings from '../data/settings';
 
+import Gun from '../classes/gun';
+
 export default class UI extends Phaser.Scene {
   constructor() {
     super({ key: Keys.Scenes.UI });
   }
 
   init(data) {
+    // Enables different move behavior depending on device
+    // https://phaser.discourse.group/t/check-if-mobile/305/5¡
+    this.setInputs(this.sys.game.device.os.desktop, this);
+
     this.cameras.main.fadeIn(Settings.Cam_FadeTime);
 
     eventManager.on(Keys.Events.shootGun, this.updateBullets, this);
@@ -56,6 +62,7 @@ export default class UI extends Phaser.Scene {
 
     this.CTA = this.add.image(300, 100, Keys.Assets.UI, Keys.UI.CTAMessage);
     this.CTA.setVisible(false);
+    this.gun = new Gun(this, Settings.Amount_Of_Bullets); // Maybe UI for overlay?
   }
 
   update(time, delta) {
@@ -92,6 +99,8 @@ export default class UI extends Phaser.Scene {
    */
   updateCounter() {
     const icon = this.deerIcons.getFirstDead();
+    if (!icon) return;
+
     icon.setActive(true);
     icon.fx.reset();
   }
@@ -101,4 +110,52 @@ export default class UI extends Phaser.Scene {
   }
 
   hideCTA() {}
+
+  /**
+   * Sets input handling for the scene.
+   * @param {boolean} isDesktop Checked if the machine is a desktop
+   * @param {Phaser.Scene} scene The scene context
+   */
+  setInputs(isDesktop, scene) {
+    // https://photonstorm.github.io/phaser3-docs/Phaser.Input.Events.html
+    // Desktops don't need drag wrapped around
+    if (isDesktop) {
+      this.input.on(
+        Phaser.Input.Events.POINTER_MOVE,
+        (pointer) => {
+          this.gun.move(pointer.x, pointer.y);
+        },
+        scene
+      );
+
+      this.input.on(
+        Phaser.Input.Events.POINTER_UP,
+        (pointer) => {
+          if (Math.abs(pointer.downX - pointer.upX) <= 10 && Math.abs(pointer.downY - pointer.upY) <= 10) {
+            this.gun.shoot(pointer.x, pointer.y);
+          }
+        },
+        scene
+      );
+    } else {
+      // On mobiles, "tap" and drag to move
+      this.input.on(
+        Phaser.Input.Events.POINTER_DOWN,
+        () => {
+          this.input.on(Phaser.Input.Events.POINTER_MOVE, (pointer) => this.gun.move(pointer.x, pointer.y));
+          // Shoot on release
+          this.input.on(
+            Phaser.Input.Events.POINTER_UP,
+            (pointer) => {
+              if (Math.abs(pointer.downX - pointer.upX) <= 10 && Math.abs(pointer.downY - pointer.upY) <= 10) {
+                this.gun.shoot(pointer.x, pointer.y);
+              }
+            },
+            scene
+          );
+        },
+        scene
+      );
+    }
+  }
 }

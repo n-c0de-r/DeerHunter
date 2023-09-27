@@ -4,7 +4,6 @@ import eventManager from '../classes/EventManager';
 import * as Keys from '../data/keys';
 import Settings from '../data/settings';
 
-import Gun from '../classes/gun';
 import Deer from '../classes/deer';
 
 export default class extends Phaser.Scene {
@@ -24,10 +23,6 @@ export default class extends Phaser.Scene {
     background.setDisplaySize(this.sys.game.config.width, this.sys.game.config.height);
 
     // const zone = this.setDirtZone(0xff0000, 0.2, this); // TODO: fix dirt animation
-
-    // Enables different move behavior depending on device
-    // https://phaser.discourse.group/t/check-if-mobile/305/5¡
-    this.setInputs(this.sys.game.device.os.desktop, this);
 
     this.scene.run(Keys.Scenes.UI);
 
@@ -54,9 +49,6 @@ export default class extends Phaser.Scene {
 
   create(data) {
     this.deer = new Deer(this, 400, 300);
-    this.deer = new Deer(this, 800, 600);
-    this.deer = new Deer(this, 600, 100);
-    this.gun = new Gun(this, Settings.Amount_Of_Bullets); // Maybe UI for overlay?
   }
 
   update(time, delta) {
@@ -132,54 +124,6 @@ export default class extends Phaser.Scene {
   }
 
   /**
-   * Sets input handling for the scene.
-   * @param {boolean} isDesktop Checked if the machine is a desktop
-   * @param {Phaser.Scene} scene The scene context
-   */
-  setInputs(isDesktop, scene) {
-    // https://photonstorm.github.io/phaser3-docs/Phaser.Input.Events.html
-    // Desktops don't need drag wrapped around
-    if (isDesktop) {
-      this.input.on(
-        Phaser.Input.Events.POINTER_MOVE,
-        (pointer) => {
-          this.gun.move(pointer.x, pointer.y);
-        },
-        scene
-      );
-
-      this.input.on(
-        Phaser.Input.Events.POINTER_UP,
-        (pointer) => {
-          if (Math.abs(pointer.downX - pointer.upX) <= 10 && Math.abs(pointer.downY - pointer.upY) <= 10) {
-            this.gun.shoot(pointer.x, pointer.y);
-          }
-        },
-        scene
-      );
-    } else {
-      // On mobiles, "tap" and drag to move
-      this.input.on(
-        Phaser.Input.Events.POINTER_DOWN,
-        () => {
-          this.input.on(Phaser.Input.Events.POINTER_MOVE, (pointer) => this.gun.move(pointer.x, pointer.y));
-          // Shoot on release
-          this.input.on(
-            Phaser.Input.Events.POINTER_UP,
-            (pointer) => {
-              if (Math.abs(pointer.downX - pointer.upX) <= 10 && Math.abs(pointer.downY - pointer.upY) <= 10) {
-                this.gun.shoot(pointer.x, pointer.y);
-              }
-            },
-            scene
-          );
-        },
-        scene
-      );
-    }
-  }
-
-  /**
    * Plays a given animation in the scene at a certain clicked position
    * @param {number} x The clicked x position.
    * @param {number} y The clicked y position.
@@ -196,7 +140,10 @@ export default class extends Phaser.Scene {
     });
   }
 
-  playBonus() {}
+  playBonus() {
+    console.log('play bonus round');
+    // TODO: implement this and stop time
+  }
 
   /**
    * Transitions to next scene and fades out the camera.

@@ -35,15 +35,26 @@ export default class Deer extends Phaser.Physics.Arcade.Sprite {
   }
 
   hit(x, y) {
-    console.log(this);
     if (!Phaser.Geom.Rectangle.Contains(this.body, x, y)) return;
 
-    if (Settings.Blood) this.play(Keys.Animations.BloodSplash);
-
     eventManager.emit(Keys.Events.hitDeer);
-    this.on(Phaser.Animations.Events.ANIMATION_COMPLETE, () => {
-      eventManager.off(Keys.Events.shootGun, this.hit, this);
-      this.destroy();
-    });
+    if (Settings.Blood) {
+      this.play(Keys.Animations.BloodSplash);
+      this.on(Phaser.Animations.Events.ANIMATION_COMPLETE, () => {
+        eventManager.off(Keys.Events.shootGun, this.hit, this);
+        this.destroy();
+      });
+    } else {
+      this.scene.tweens.add({
+        targets: this,
+        tint: 0xff0000,
+        alpha: 0,
+        duration: 1000,
+        ease: 'Quad.easeOut',
+        onComplete: () => {
+          this.destroy();
+        },
+      });
+    }
   }
 }
