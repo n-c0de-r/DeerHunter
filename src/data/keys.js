@@ -46,13 +46,16 @@ export const UI = {
 };
 
 export const Events = {
-  moveGun: 'move-gun',
+  showGun: 'show-gun',
+  tutorialDone: 'tutorial-done',
   shootGun: 'shoot-gun',
   emptyGun: 'empty-gun',
   hitDeer: 'hit-deer',
-  killHattrick: 'kill-hattrick',
+  playBonus: 'play-bonus',
   timeoutMessage: 'timeout-message',
   timeoutGame: 'timeout-game',
+  showCTA: 'show-CTA',
+  hideCTA: 'hide-CTA',
   stopTimer: 'stop-timer',
   resumeTimer: 'resume-timer',
 };

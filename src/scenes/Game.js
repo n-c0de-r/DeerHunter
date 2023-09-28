@@ -23,28 +23,14 @@ export default class extends Phaser.Scene {
     background.setDisplaySize(this.sys.game.config.width, this.sys.game.config.height);
 
     // const zone = this.setDirtZone(0xff0000, 0.2, this); // TODO: fix dirt animation
-
     this.scene.run(Keys.Scenes.UI);
 
     this.cameras.main.fadeIn(Settings.Cam_FadeTime);
     this.time.delayedCall(Settings.Cam_FadeTime, () => {
-      this.isTimerRunning = true;
+      this.setTutorial(400, 300);
     });
 
-    eventManager.on(Keys.Events.emptyGun, this.transitionScenes, this);
-    this.events.on(Phaser.Scenes.Events.SHUTDOWN, () => {
-      eventManager.off(Keys.Events.emptyGun, this.transitionScenes, this);
-    });
-
-    eventManager.on(Keys.Events.timeoutGame, this.transitionScenes, this);
-    this.events.on(Phaser.Scenes.Events.SHUTDOWN, () => {
-      eventManager.off(Keys.Events.timeoutGame, this.transitionScenes, this);
-    });
-
-    eventManager.on(Keys.Events.killHattrick, this.playBonus, this);
-    this.events.on(Phaser.Scenes.Events.SHUTDOWN, () => {
-      eventManager.off(Keys.Events.killHattrick, this.playBonus, this);
-    });
+    this.setEvents();
   }
 
   create(data) {
@@ -60,6 +46,69 @@ export default class extends Phaser.Scene {
   }
 
   // SCENE FUNCTIONS
+
+  setEvents() {
+    eventManager.on(Keys.Events.hitDeer, this.finishTutorial, this);
+    this.events.on(Phaser.Scenes.Events.SHUTDOWN, () => {
+      eventManager.off(Keys.Events.hitDeer, this.finishTutorial, this);
+    });
+
+    eventManager.on(Keys.Events.emptyGun, this.transitionScenes, this);
+    this.events.on(Phaser.Scenes.Events.SHUTDOWN, () => {
+      eventManager.off(Keys.Events.emptyGun, this.transitionScenes, this);
+    });
+
+    eventManager.on(Keys.Events.timeoutGame, this.transitionScenes, this);
+    this.events.on(Phaser.Scenes.Events.SHUTDOWN, () => {
+      eventManager.off(Keys.Events.timeoutGame, this.transitionScenes, this);
+    });
+
+    eventManager.on(Keys.Events.playBonus, this.playBonus, this);
+    this.events.on(Phaser.Scenes.Events.SHUTDOWN, () => {
+      eventManager.off(Keys.Events.playBonus, this.playBonus, this);
+    });
+  }
+
+  setTutorial(x, y) {
+    // https://phaser.io/examples/v3/view/display/masks/graphics-bitmap-mask
+    this.overlay = this.add.graphics();
+
+    this.overlay.fillStyle(0x000000).fillRect(0, 0, this.sys.game.config.width, this.sys.game.config.height);
+
+    const maskGraphics = this.make.graphics();
+
+    maskGraphics.fillStyle(0xffffff);
+    maskGraphics.fillCircle(x, y, 128);
+
+    const mask = new Phaser.Display.Masks.BitmapMask(this, maskGraphics);
+
+    mask.invertAlpha = true;
+
+    this.overlay.setMask(mask);
+
+    this.tweens.add({
+      targets: this.overlay,
+      alpha: { from: 0, to: 0.75 },
+      duration: 1000,
+      onComplete: () => {
+        eventManager.emit(Keys.Events.showCTA);
+        eventManager.emit(Keys.Events.showGun);
+        this.isTimerRunning = true;
+      },
+    });
+  }
+
+  finishTutorial() {
+    this.tweens.add({
+      targets: this.overlay,
+      alpha: 0,
+      duration: 500,
+      onComplete: () => {
+        eventManager.emit(Keys.Events.tutorialDone, true);
+        eventManager.off(Keys.Events.hitDeer, () => this.finishTutorial, this);
+      },
+    });
+  }
 
   /**
    * Sets up zone where the dirt animation is played

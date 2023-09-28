@@ -11,14 +11,29 @@ export default class Gun extends Phaser.Physics.Arcade.Sprite {
    * Instanciates a a new gun object.
    * @param {Phaser.Scene} scene The phase scene this belongs to.
    */
-  constructor(scene, bullets) {
+  constructor(scene) {
     super(scene, scene.sys.game.config.width / 2, scene.sys.game.config.height - MOVE_RANGE, Keys.Assets.Gun, 'Gun1.png');
     scene.add.existing(this);
 
     MIDPOINT.x = this.x; //scene.sys.game.config.width / 2;
     MIDPOINT.y = this.y; //scene.sys.game.config.height - MOVE_RANGE;
-    this.bullets = bullets;
     this.isReloading = false;
+  }
+
+  /**
+   * Toggles if the gun is interactable
+   * @param {boolean} state Sets the interactivity on or off.
+   */
+  toggleEnabled(state) {
+    this.isEnabled = state;
+  }
+
+  /**
+   * Sets the number of available shots
+   * @param {number} amount The number of bullets you can shoot
+   */
+  setBullets(amount) {
+    this.bullets = amount;
   }
 
   /**
@@ -29,6 +44,8 @@ export default class Gun extends Phaser.Physics.Arcade.Sprite {
    * @param {number} y The mouse's y position on screen
    */
   move(x, y) {
+    if (!this.isEnabled) return;
+
     // Power of Math :P
     const xPercent = (x - MIDPOINT.x) / MIDPOINT.x;
     const yPercent = (y - MIDPOINT.y) / MIDPOINT.y;
@@ -51,12 +68,14 @@ export default class Gun extends Phaser.Physics.Arcade.Sprite {
    * @param {number} y Target point's y coordinate
    */
   shoot(x, y) {
+    if (!this.isEnabled) return;
+
     if (!this.isReloading && this.bullets > 0) {
       this.bullets -= 1;
       this.play(Keys.Animations.KnockBack);
       this.isReloading = true;
-      eventManager.emit(Keys.Events.shootGun, x, y);
 
+      eventManager.emit(Keys.Events.shootGun, x, y);
       // https://blog.ourcade.co/posts/2020/phaser-3-fade-out-scene-transition/ DELAY
       this.scene.time.delayedCall(1000, () => {
         if (this.bullets <= 0) eventManager.emit(Keys.Events.emptyGun);
