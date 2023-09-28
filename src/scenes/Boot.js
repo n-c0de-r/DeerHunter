@@ -67,7 +67,7 @@ export default class Boots extends Phaser.Scene {
     animManager.create({
       key: Keys.Animations.KnockBack,
       frames: animManager.generateFrameNames(Keys.Assets.Gun, {
-        prefix: 'Gun',
+        prefix: Keys.Assets.Gun,
         start: 2,
         end: 1,
         suffix: '.png',
@@ -95,6 +95,19 @@ export default class Boots extends Phaser.Scene {
         suffix: '.png',
       }),
       frameRate: 20,
+    });
+
+    this.anims.create({
+      key: Keys.Animations.DeerJump,
+      frames: this.anims.generateFrameNames(Keys.Assets.Deer, {
+        prefix: Keys.Assets.Deer,
+        start: 0,
+        end: 13,
+        // https://phaser.io/examples/v3/view/animation/generate-frame-names
+        zeroPad: 2,
+        suffix: '.png',
+      }),
+      frameRate: 10,
     });
 
     this.anims.create({

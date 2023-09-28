@@ -5,6 +5,7 @@ import * as Keys from '../data/keys';
 
 const MIDPOINT = { x: 0, y: 0 };
 const MOVE_RANGE = 50;
+const KNOCKBACK_DELAY = 500;
 
 export default class Gun extends Phaser.Physics.Arcade.Sprite {
   /**
@@ -12,12 +13,13 @@ export default class Gun extends Phaser.Physics.Arcade.Sprite {
    * @param {Phaser.Scene} scene The phase scene this belongs to.
    */
   constructor(scene) {
-    super(scene, scene.sys.game.config.width / 2, scene.sys.game.config.height - MOVE_RANGE, Keys.Assets.Gun, 'Gun1.png');
+    super(scene, scene.sys.game.config.width / 2, scene.sys.game.config.height - MOVE_RANGE, Keys.Assets.Gun, Keys.UI.Gun);
     scene.add.existing(this);
 
     MIDPOINT.x = this.x; //scene.sys.game.config.width / 2;
     MIDPOINT.y = this.y; //scene.sys.game.config.height - MOVE_RANGE;
     this.isReloading = false;
+    this.name = Keys.Assets.Gun;
   }
 
   /**
@@ -77,7 +79,7 @@ export default class Gun extends Phaser.Physics.Arcade.Sprite {
 
       eventManager.emit(Keys.Events.shootGun, x, y);
       // https://blog.ourcade.co/posts/2020/phaser-3-fade-out-scene-transition/ DELAY
-      this.scene.time.delayedCall(1000, () => {
+      this.scene.time.delayedCall(KNOCKBACK_DELAY, () => {
         if (this.bullets <= 0) eventManager.emit(Keys.Events.emptyGun);
         this.isReloading = false;
       });

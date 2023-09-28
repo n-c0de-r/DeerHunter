@@ -43,6 +43,8 @@ export const UI = {
   Bullet: 'bullet_small.png',
   ButtonAgain: 'ButtonAgain',
   CTAMessage: 'tap_to_shoot.png',
+  Gun: 'Gun1.png',
+  Scope: 'scope.png',
 };
 
 export const Events = {

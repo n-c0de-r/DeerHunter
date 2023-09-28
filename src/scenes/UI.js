@@ -5,6 +5,7 @@ import * as Keys from '../data/keys';
 import Settings from '../data/settings';
 
 import Gun from '../classes/gun';
+import Scope from '../classes/scope';
 
 export default class UI extends Phaser.Scene {
   constructor() {
@@ -13,6 +14,7 @@ export default class UI extends Phaser.Scene {
     this.CTAtimer = 0;
     this.isTimerRunning = false;
     this.isTutorialDone = false;
+    this.isBonusLayout = false;
   }
 
   init(data) {
@@ -57,11 +59,25 @@ export default class UI extends Phaser.Scene {
     this.gun = new Gun(this);
     this.gun.toggleEnabled(false);
     this.gun.setAlpha(0);
+
+    this.time.delayedCall(Settings.Cam_FadeTime, () => {
+      this.mask = this.setMask(400, 300, 128);
+      this.setOverlay(this.mask, 0.75);
+      this.overlayTween.play();
+      this.overlayTween.on(Phaser.Tweens.Events.TWEEN_COMPLETE, () => {
+        this.showCTA();
+        this.showGun();
+        this.isTimerRunning = true;
+      });
+      // this.setTutorial(this.deer.x, this.deer.y);
+    });
   }
 
   update(time, delta) {
     // All icons are on, so 3 deers killed :(
-    if (!this.deerIcons.getFirstDead()) {
+    if (!this.isBonusLayout && !this.deerIcons.getFirstDead()) {
+      this.isBonusLayout = true;
+      console.log('bonus emit');
       eventManager.emit(Keys.Events.playBonus);
     }
 
@@ -79,9 +95,9 @@ export default class UI extends Phaser.Scene {
       eventManager.off(Keys.Events.showGun, this.showGun, this);
     });
 
-    eventManager.on(Keys.Events.tutorialDone, this.toggleInterface, this);
+    eventManager.on(Keys.Events.hitDeer, this.finishTutorial, this);
     this.events.on(Phaser.Scenes.Events.SHUTDOWN, () => {
-      eventManager.off(Keys.Events.tutorialDone, this.toggleInterface, this);
+      eventManager.off(Keys.Events.hitDeer, this.finishTutorial, this);
     });
 
     eventManager.on(
@@ -108,6 +124,16 @@ export default class UI extends Phaser.Scene {
       eventManager.off(Keys.Events.hitDeer, this.updateCounter, this);
     });
 
+    eventManager.on(
+      Keys.Events.playBonus,
+      () => {
+        this.cameras.main.fadeOut(Settings.Cam_FadeTime);
+        this.time.delayedCall(Settings.Cam_FadeTime, () => {
+          this.setBonus();
+        });
+      },
+      this
+    );
     eventManager.on(Keys.Events.emptyGun, () => this.cameras.main.fadeOut(Settings.Cam_FadeTime), this);
     eventManager.on(Keys.Events.timeoutGame, () => this.cameras.main.fadeOut(Settings.Cam_FadeTime), this);
   }
@@ -125,6 +151,13 @@ export default class UI extends Phaser.Scene {
         Phaser.Input.Events.POINTER_MOVE,
         (pointer) => {
           this.gun.move(pointer.x, pointer.y);
+          console.log(this.gun.isEnabled);
+          console.log('scope name', this.gun.name);
+          console.log('scope key', Keys.UI.Scope);
+          if (this.gun.isEnabled && this.gun.name === Keys.UI.Scope) {
+            this.mask = this.setMask(pointer.x, pointer.y, this.gun.getBounds().width / 2);
+            this.overlay = this.setOverlay(this.mask, 1);
+          }
         },
         scene
       );
@@ -143,7 +176,13 @@ export default class UI extends Phaser.Scene {
       this.input.on(
         Phaser.Input.Events.POINTER_DOWN,
         () => {
-          this.input.on(Phaser.Input.Events.POINTER_MOVE, (pointer) => this.gun.move(pointer.x, pointer.y));
+          this.input.on(Phaser.Input.Events.POINTER_MOVE, (pointer) => {
+            this.gun.move(pointer.x, pointer.y);
+            if (this.gun.isEnabled && this.gun.name === Keys.UI.Scope) {
+              this.mask = this.setMask(pointer.x, pointer.y, this.gun.getBounds().width / 2);
+              this.overlay = this.setOverlay(this.mask, 1);
+            }
+          });
           // Shoot on release
           this.input.on(
             Phaser.Input.Events.POINTER_UP,
@@ -161,6 +200,58 @@ export default class UI extends Phaser.Scene {
   }
 
   /**
+   * Sets up an overlay and masks a cutout
+   * @param <{Phaser.Display.Masks.BitmapMask}> mask The mask for the overlay.
+   * @param {number} alpha The intensity of transparency.
+   */
+  setOverlay(mask, alpha) {
+    // https://phaser.io/examples/v3/view/display/masks/graphics-bitmap-mask
+    this.overlay = this.add.graphics();
+
+    this.overlay.fillStyle(0x000000).fillRect(0, 0, this.sys.game.config.width, this.sys.game.config.height);
+
+    this.overlay.setMask(mask);
+
+    this.overlayTween = this.tweens.add({
+      targets: this.overlay,
+      alpha: { from: 0, to: alpha },
+      duration: 1000,
+    });
+  }
+
+  /**
+   * Creates a bitmap mask.
+   * @param {number} x X position of the mask.
+   * @param {number} y Y position of the mask.
+   * @param {number} size The radius of the mask.
+   * @returns {Phaser.Display.Masks.BitmapMask} A phaser bitmap mask
+   */
+  setMask(x, y, size) {
+    const maskGraphics = this.make.graphics();
+
+    maskGraphics.fillStyle(0xffffff);
+    maskGraphics.fillCircle(x, y, size);
+
+    const mask = new Phaser.Display.Masks.BitmapMask(this, maskGraphics);
+
+    mask.invertAlpha = true;
+    return mask;
+  }
+
+  finishTutorial() {
+    this.tweens.add({
+      targets: this.overlay,
+      alpha: 0,
+      duration: 250,
+      onComplete: () => {
+        this.toggleInterface(true);
+        this.isTutorialDone = true;
+        eventManager.off(Keys.Events.hitDeer, () => this.finishTutorial, this);
+      },
+    });
+  }
+
+  /**
    * Toggles the UI elements visibility.
    */
   toggleInterface(state) {
@@ -168,7 +259,10 @@ export default class UI extends Phaser.Scene {
     this.counterBack.setVisible(state);
     this.deerIcons.setVisible(state);
     this.bullets.setVisible(state);
-    this.isTutorialDone = state;
+    if (state) {
+      this.gun.setBullets(Settings.Amount_Of_Bullets);
+      this.hideCTA();
+    }
   }
 
   /**
@@ -184,7 +278,25 @@ export default class UI extends Phaser.Scene {
       },
     });
     this.gun.toggleEnabled(true);
-    this.gun.setBullets(Settings.Amount_Of_Bullets);
+    this.gun.setBullets(Infinity);
+    this.showCTA();
+  }
+
+  /**
+   * Sets up the bonus view
+   */
+  setBonus() {
+    this.gun.destroy();
+    console.log('bonus setup');
+    const x = this.sys.game.config.width / 2;
+    const y = this.sys.game.config.height / 2;
+    this.gun = new Scope(this, x, y);
+    this.gun.setScale(0.5);
+    this.mask = this.setMask(x, y, this.gun.getBounds().width / 2);
+    this.overlay = this.setOverlay(this.mask, 1);
+    this.toggleInterface(false);
+    this.cameras.main.fadeIn(Settings.Cam_FadeTime);
+    this.time.delayedCall(Settings.Cam_FadeTime, this.gun.toggleEnabled(true));
   }
 
   /**
@@ -221,7 +333,7 @@ export default class UI extends Phaser.Scene {
   hideCTA() {
     this.CTAtimer = Settings.CTA_On_Idle_Time;
     // Don't bother if all is off :P
-    if (!this.CTA.visible) return;
+    if (!this.CTA.visible || !this.isTutorialDone) return;
 
     this.CTAtween.destroy();
     this.CTAtween = this.tweens.add({
@@ -260,6 +372,7 @@ export default class UI extends Phaser.Scene {
    * Updates the counter display
    */
   updateCounter() {
+    Settings.Amount_Of_Deer -= 1;
     const icon = this.deerIcons.getFirstDead();
     if (!icon || !this.isTutorialDone) return;
 

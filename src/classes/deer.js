@@ -12,9 +12,10 @@ export default class Deer extends Phaser.Physics.Arcade.Sprite {
    * @param {Phaser.Scene} scene The phase scene this belongs to.
    * @param {number} x The x position to spawn at.
    * @param {number} y The y position to spawn at.
+   * @param {Phaser.Geom.Rectangle} moveArea The area the deer is allowed to move in.
    */
-  constructor(scene, x, y) {
-    super(scene, x, y, Keys.Assets.Deer, 'deerJump15.png');
+  constructor(scene, x, y, moveArea) {
+    super(scene, x, y, Keys.Assets.Deer, 'Deer15.png');
     scene.add.existing(this);
     scene.physics.world.enable(this);
     this.resetHitBounds();
@@ -32,6 +33,10 @@ export default class Deer extends Phaser.Physics.Arcade.Sprite {
     this.scene.events.on(Phaser.Scenes.Events.SHUTDOWN, () => {
       eventManager.off(Keys.Events.shootGun, this.hit, this);
     });
+  }
+
+  jump(x, y) {
+    this.play(Keys.Animations.DeerJump);
   }
 
   hit(x, y) {
@@ -56,5 +61,9 @@ export default class Deer extends Phaser.Physics.Arcade.Sprite {
       });
     }
     eventManager.off(Keys.Events.shootGun, this.hit, this);
+  }
+
+  getPosition() {
+    return { x: this.x, y: this.y };
   }
 }

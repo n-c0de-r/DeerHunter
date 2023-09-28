@@ -1,6 +1,6 @@
 {
   "frames": {
-    "deerJump07.png": {
+    "Deer07.png": {
       "frame": {
         "x": 0,
         "y": 0,
@@ -24,7 +24,7 @@
         "y": 0.5
       }
     },
-    "deerJump06.png": {
+    "Deer06.png": {
       "frame": {
         "x": 321,
         "y": 0,
@@ -48,7 +48,7 @@
         "y": 0.5
       }
     },
-    "deerJump05.png": {
+    "Deer05.png": {
       "frame": {
         "x": 0,
         "y": 213,
@@ -72,7 +72,7 @@
         "y": 0.5
       }
     },
-    "deerJump04.png": {
+    "Deer04.png": {
       "frame": {
         "x": 641,
         "y": 0,
@@ -96,7 +96,7 @@
         "y": 0.5
       }
     },
-    "deerJump08.png": {
+    "Deer08.png": {
       "frame": {
         "x": 310,
         "y": 215,
@@ -120,7 +120,7 @@
         "y": 0.5
       }
     },
-    "deerJump09.png": {
+    "Deer09.png": {
       "frame": {
         "x": 310,
         "y": 419,
@@ -144,7 +144,7 @@
         "y": 0.5
       }
     },
-    "deerJump03.png": {
+    "Deer03.png": {
       "frame": {
         "x": 0,
         "y": 435,
@@ -168,7 +168,7 @@
         "y": 0.5
       }
     },
-    "deerJump10.png": {
+    "Deer10.png": {
       "frame": {
         "x": 938,
         "y": 0,
@@ -192,7 +192,7 @@
         "y": 0.5
       }
     },
-    "deerJump02.png": {
+    "Deer02.png": {
       "frame": {
         "x": 1214,
         "y": 0,
@@ -216,7 +216,7 @@
         "y": 0.5
       }
     },
-    "deerJump01.png": {
+    "Deer01.png": {
       "frame": {
         "x": 938,
         "y": 223,
@@ -240,7 +240,7 @@
         "y": 0.5
       }
     },
-    "deerJump11.png": {
+    "Deer11.png": {
       "frame": {
         "x": 606,
         "y": 262,
@@ -264,7 +264,7 @@
         "y": 0.5
       }
     },
-    "deerJump00.png": {
+    "Deer00.png": {
       "frame": {
         "x": 599,
         "y": 509,
@@ -288,7 +288,7 @@
         "y": 0.5
       }
     },
-    "deerJump12.png": {
+    "Deer12.png": {
       "frame": {
         "x": 279,
         "y": 635,
@@ -312,7 +312,7 @@
         "y": 0.5
       }
     },
-    "deerJump13.png": {
+    "Deer13.png": {
       "frame": {
         "x": 0,
         "y": 680,
@@ -336,7 +336,7 @@
         "y": 0.5
       }
     },
-    "deerJump14.png": {
+    "Deer14.png": {
       "frame": {
         "x": 1478,
         "y": 0,
@@ -360,7 +360,7 @@
         "y": 0.5
       }
     },
-    "deerJump15.png": {
+    "Deer15.png": {
       "frame": {
         "x": 1681,
         "y": 0,
