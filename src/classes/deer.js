@@ -118,10 +118,13 @@ export default class Deer extends Phaser.Physics.Arcade.Sprite {
     } else {
       this.scene.tweens.add({
         targets: this,
-        tint: 0xff0000,
+        //tint: Phaser.Display.Color.GetColor(255, 0, 0),
         alpha: 0,
         duration: 1000,
         ease: 'Quad.easeOut',
+        onUpdate: () => {
+          this.setTint(Phaser.Display.Color.GetColor(Math.random() * 255, value, value));
+        },
         onComplete: () => {
           this.destroy();
         },
