@@ -19,6 +19,7 @@ export default class UI extends Phaser.Scene {
     // Enables different move behavior depending on device
     // https://phaser.discourse.group/t/check-if-mobile/305/5¡
     this.setInputs(this.sys.game.device.os.desktop, this);
+    this.target = data.target;
   }
 
   create(data) {
@@ -55,7 +56,7 @@ export default class UI extends Phaser.Scene {
     this.gun.setAlpha(0);
 
     this.time.delayedCall(Settings.Cam_FadeTime, () => {
-      this.mask = this.setMask(data.x, data.y, data.size / 2);
+      this.mask = this.setMask(this.target.x, this.target.y, this.target.body.width / 1.5);
       this.setOverlay(this.mask, 0.75);
       this.overlayTween.play();
       this.overlayTween.on(Phaser.Tweens.Events.TWEEN_COMPLETE, () => {
@@ -184,12 +185,12 @@ export default class UI extends Phaser.Scene {
    * @returns {Phaser.Display.Masks.BitmapMask} A phaser bitmap mask
    */
   setMask(x, y, size) {
-    const maskGraphics = this.make.graphics();
+    this.maskGraphics = this.make.graphics();
 
-    maskGraphics.fillStyle(0xffffff);
-    maskGraphics.fillCircle(x, y, size);
+    this.maskGraphics.fillStyle(0xffffff);
+    this.maskGraphics.fillCircle(x, y, size);
 
-    const mask = new Phaser.Display.Masks.BitmapMask(this, maskGraphics);
+    const mask = new Phaser.Display.Masks.BitmapMask(this, this.maskGraphics);
 
     mask.invertAlpha = true;
     return mask;

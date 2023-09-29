@@ -14,10 +14,11 @@ const DEER_AREA = [
   { x: 763, y: 579 },
   { x: 940, y: 581 },
   { x: 1027, y: 501 },
-  { x: 1273, y: 546 },
-  { x: 1275, y: 647 },
-  { x: 0, y: 647 },
+  { x: 1275, y: 547 },
+  { x: 0, y: 547 },
 ];
+const SPAWN_POINTS = { left: { x: -200, y: 600, flip: -1 }, right: { x: 1480, y: 600, flip: 1 } };
+const FIRST_POSITION = new Phaser.Geom.Point({ x: 624, y: 534 });
 
 export default class extends Phaser.Scene {
   constructor() {
@@ -35,10 +36,11 @@ export default class extends Phaser.Scene {
   }
 
   create(data) {
-    this.dirtANDdeerZone = this.setDirtZone(0xff0000, 0.2, this); // TODO: fix dirt animation
-    this.deer = this.spawnDeer();
+    this.dirtANDdeerZone = this.setDirtZone(0xff0000, 0.2, this);
+    this.deer = undefined;
+    this.spawnDeer(FIRST_POSITION);
+    this.deer.isTutorialDeer = true;
 
-    // this.scene.run(Keys.Scenes.UI, { x: this.deer.x, y: this.deer.y, size: this.deer.body.width * 2 });
     this.cameras.main.fadeIn(Settings.Cam_FadeTime);
 
     this.setEvents();
@@ -72,6 +74,22 @@ export default class extends Phaser.Scene {
       eventManager.off(Keys.Events.hitDeer, this.spawnDeer, this);
     });
 
+    eventManager.on(Keys.Events.runDeer, this.spawnDeer, this);
+    this.events.on(Phaser.Scenes.Events.SHUTDOWN, () => {
+      eventManager.off(Keys.Events.runDeer, this.spawnDeer, this);
+    });
+
+    eventManager.on(
+      Keys.Events.firstDeer,
+      () => {
+        this.scene.run(Keys.Scenes.UI, { target: this.deer });
+      },
+      this
+    );
+    this.events.on(Phaser.Scenes.Events.SHUTDOWN, () => {
+      eventManager.off(Keys.Events.firstDeer, () => {}, this);
+    });
+
     eventManager.on(Keys.Events.emptyGun, this.transitionScenes, this);
     this.events.on(Phaser.Scenes.Events.SHUTDOWN, () => {
       eventManager.off(Keys.Events.emptyGun, this.transitionScenes, this);
@@ -93,62 +111,49 @@ export default class extends Phaser.Scene {
   /**
    * Sets up zone where the dirt animation is played
    * when hitting the ground instead of a deer.
-   * @param {number} color The nuber value of the color to set.
-   * @param {number} alpha The value of level of transparency.
    * @param {Phaser.Scene} scene
    * @returns {Phaser.Geom.Polygon}
    */
-  setDirtZone(target, color, alpha, scene) {
+  setDirtZone(scene) {
     // https://phaser.discourse.group/t/how-to-create-a-polygon-dropzone/9846
+    // https://labs.phaser.io/edit.html?src=src/input\mouse\polygon%20hit%20area.js
     const polygon = new Phaser.Geom.Polygon(DEER_AREA);
     this.background.setInteractive();
-    // const shape = scene.add.polygon(0, 0, polygon.points, color, alpha);
-    // shape.setOrigin(0, 0);
-
-    // shape.setInteractive(polygon, Phaser.Geom.Polygon.ContainsPoint);
     this.background.on(
       Phaser.Input.Events.POINTER_UP,
       (pointer) => {
-        // TODO: Fix shape behavior
-
         // Check if the pointer is inside the polygon
         if (Phaser.Geom.Polygon.ContainsPoint(polygon, pointer)) {
-          console.log('Pointer up event on the shape');
           this.playAnim(pointer.x, pointer.y, Keys.Animations.DirtBurts);
         }
       },
       scene
     );
 
-    // https://labs.phaser.io/edit.html?src=src/input\mouse\polygon%20hit%20area.js
-    //  Draw the polygon
-    const graphics = this.add.graphics({ x: this.background.x - this.background.displayOriginX, y: this.background.y - this.background.displayOriginY });
-
-    graphics.lineStyle(2, 0x00aa00);
-
-    graphics.beginPath();
-
-    graphics.moveTo(polygon.points[0].x, polygon.points[0].y);
-
-    for (let i = 1; i < polygon.points.length; i++) {
-      graphics.lineTo(polygon.points[i].x, polygon.points[i].y);
-    }
-
-    graphics.closePath();
-    graphics.strokePath();
     return polygon;
   }
 
   /**
    * Creates a deer instance at a random point.
+   * @param {Phaser.Geom.Point} moveTo The point to move to, otherwise random.
    * @returns {Deer} A deer instance
    */
-  spawnDeer() {
+  spawnDeer(moveTo) {
+    console.log('spawnDeer ~ moveTo:', moveTo);
     if (Settings.Count_Of_Deer >= 3) return;
 
+    const direction = Math.round(Math.random());
+    const spawnPoint = Object.values(SPAWN_POINTS).slice(direction)[0];
     // https://phaser.io/examples/v3/view/geom/rectangle/get-random-point - not a zone... ok
-    const spawnPoint = this.physics.world.bounds.getRandomPoint(); // TODO: fix spawn position
-    return new Deer(this, spawnPoint.x, spawnPoint.y, this.dirtANDdeerZone);
+    if (moveTo === undefined) moveTo = this.physics.world.bounds.getRandomPoint();
+    console.log('spawnDeer ~ moveTo === undefined:', moveTo === undefined);
+    // console.log('spawnDeer ~ !moveTo:', !moveTo);
+    // console.log('spawnDeer ~ !Phaser.Geom.Polygon.ContainsPoint(this.dirtANDdeerZone, moveTo):', !Phaser.Geom.Polygon.ContainsPoint(this.dirtANDdeerZone, moveTo));
+    while (!Phaser.Geom.Polygon.ContainsPoint(this.dirtANDdeerZone, moveTo)) {
+      moveTo = this.physics.world.bounds.getRandomPoint();
+    }
+
+    this.deer = new Deer(this, spawnPoint.x, spawnPoint.y, spawnPoint.flip, moveTo);
   }
 
   /**
@@ -178,7 +183,7 @@ export default class extends Phaser.Scene {
     this.time.delayedCall(Settings.Cam_FadeTime, () => {
       this.scene.manager.stop(Keys.Scenes.Game);
       this.scene.manager.stop(Keys.Scenes.UI);
-      this.scene.start(nextScene);
+      this.scene.start(nextScene, { dirtANDdeerZone: this.dirtANDdeerZone });
     });
   }
 }

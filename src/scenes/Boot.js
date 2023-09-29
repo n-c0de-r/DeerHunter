@@ -102,12 +102,12 @@ export default class Boots extends Phaser.Scene {
       frames: this.anims.generateFrameNames(Keys.Assets.Deer, {
         prefix: Keys.Assets.Deer,
         start: 0,
-        end: 13,
+        end: 15,
         // https://phaser.io/examples/v3/view/animation/generate-frame-names
         zeroPad: 2,
         suffix: '.png',
       }),
-      frameRate: 20,
+      frameRate: 15,
     });
 
     this.anims.create({

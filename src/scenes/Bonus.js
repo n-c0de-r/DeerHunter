@@ -7,6 +7,7 @@ import Settings from '../data/settings';
 import Deer from '../classes/deer';
 import Scope from '../classes/scope';
 
+const SPAWN_POINTS = { left: { x: -200, y: 600 }, right: { x: 1480, y: 600 } };
 const CAMERA_ZOOM = 1;
 
 export default class extends Phaser.Scene {
@@ -18,6 +19,8 @@ export default class extends Phaser.Scene {
 
   // PHASER BUILT-INS
   init(data) {
+    this.dirtANDdeerZone = data.dirtANDdeerZone;
+
     const background = this.add.image(0, 0, Keys.Assets.Background);
     background.setOrigin(0, 0);
     background.setDisplaySize(this.sys.game.config.width, this.sys.game.config.height);
@@ -160,8 +163,18 @@ export default class extends Phaser.Scene {
    * @returns {Deer} A deer instance
    */
   spawnDeer() {
-    const spawnPoint = this.physics.world.bounds.getRandomPoint();
-    return new Deer(this, spawnPoint.x, spawnPoint.y, this.deerZone);
+    // const spawnPoint = this.physics.world.bounds.getRandomPoint();
+    // return new Deer(this, spawnPoint.x, spawnPoint.y, this.deerZone);
+
+    const direction = Math.round(Math.random()) * 2 - 1;
+    const spawnPoint = Object.values(SPAWN_POINTS).slice(direction)[0];
+
+    let movePoint = this.physics.world.bounds.getRandomPoint();
+    while (!Phaser.Geom.Polygon.ContainsPoint(this.dirtANDdeerZone, movePoint)) {
+      movePoint = this.physics.world.bounds.getRandomPoint();
+    }
+
+    this.deer = new Deer(this, spawnPoint.x, spawnPoint.y, direction, movePoint);
   }
 
   /**
