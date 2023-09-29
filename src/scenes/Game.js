@@ -6,6 +6,7 @@ import Settings from '../data/settings';
 
 import Deer from '../classes/deer';
 
+// Predefined by script
 const DEER_AREA = [
   { x: 0, y: 517 },
   { x: 269, y: 523 },
@@ -28,9 +29,9 @@ export default class extends Phaser.Scene {
   // PHASER BUILT-INS
   init(data) {
     // Only needed once. Loaded separately, before everything else, just in case!
-    const background = this.add.image(0, 0, Keys.Assets.Background);
-    background.setOrigin(0, 0);
-    background.setDisplaySize(this.sys.game.config.width, this.sys.game.config.height);
+    this.background = this.add.image(0, 0, Keys.Assets.Background);
+    this.background.setOrigin(0, 0);
+    this.background.setDisplaySize(this.sys.game.config.width, this.sys.game.config.height);
   }
 
   create(data) {
@@ -97,27 +98,44 @@ export default class extends Phaser.Scene {
    * @param {Phaser.Scene} scene
    * @returns {Phaser.Geom.Polygon}
    */
-  setDirtZone(color, alpha, scene) {
+  setDirtZone(target, color, alpha, scene) {
     // https://phaser.discourse.group/t/how-to-create-a-polygon-dropzone/9846
-    // Predefined by script
     const polygon = new Phaser.Geom.Polygon(DEER_AREA);
-    const shape = scene.add.polygon(0, 0, polygon.points, color, alpha);
-    shape.setOrigin(0, 0);
+    this.background.setInteractive();
+    // const shape = scene.add.polygon(0, 0, polygon.points, color, alpha);
+    // shape.setOrigin(0, 0);
 
-    shape.setInteractive();
-    shape.on(
+    // shape.setInteractive(polygon, Phaser.Geom.Polygon.ContainsPoint);
+    this.background.on(
       Phaser.Input.Events.POINTER_UP,
       (pointer) => {
-        console.log('Pointer up event on the shape');
         // TODO: Fix shape behavior
 
         // Check if the pointer is inside the polygon
         if (Phaser.Geom.Polygon.ContainsPoint(polygon, pointer)) {
-          scene.playAnim(pointer.x, pointer.y, Keys.Animations.DirtBurts);
+          console.log('Pointer up event on the shape');
+          this.playAnim(pointer.x, pointer.y, Keys.Animations.DirtBurts);
         }
       },
       scene
     );
+
+    // https://labs.phaser.io/edit.html?src=src/input\mouse\polygon%20hit%20area.js
+    //  Draw the polygon
+    const graphics = this.add.graphics({ x: this.background.x - this.background.displayOriginX, y: this.background.y - this.background.displayOriginY });
+
+    graphics.lineStyle(2, 0x00aa00);
+
+    graphics.beginPath();
+
+    graphics.moveTo(polygon.points[0].x, polygon.points[0].y);
+
+    for (let i = 1; i < polygon.points.length; i++) {
+      graphics.lineTo(polygon.points[i].x, polygon.points[i].y);
+    }
+
+    graphics.closePath();
+    graphics.strokePath();
     return polygon;
   }
 
