@@ -45,6 +45,9 @@ export default class UI extends Phaser.Scene {
       setXY: { x: this.sys.game.config.width - 32, y: this.sys.game.config.height - 72, stepX: -32 },
     });
 
+    // TODO: Add a button to toggle blood (Yes it is included and functional)
+    // TODO: Make display responsible
+
     this.toggleInterface(false);
 
     this.CTA = this.add.image(this.sys.game.config.width - 300, 100, Keys.Assets.UI, Keys.UI.CTAMessage);

@@ -17,6 +17,9 @@ export default class extends Phaser.Scene {
     this.logo = this.add.image(this.sys.game.config.width / 2, this.sys.game.config.height / 2, Keys.Assets.UI, Keys.UI.Logo);
     this.logo.setScale(0);
 
+    this.dog = this.add.image(-300, this.sys.game.config.height / 2, Keys.Assets.UI, Keys.UI.Dog);
+    this.deer = this.add.image(this.sys.game.config.width + 300, this.sys.game.config.height / 2, Keys.Assets.UI, Keys.UI.Deer);
+
     this.button = this.add.image(0, 0, Keys.Assets.UI, Keys.UI.ButtonAgain);
     this.button.scaleX = 1.5;
     // https://phaser.io/examples/v3/view/input/pointer/external-link
@@ -64,6 +67,16 @@ export default class extends Phaser.Scene {
           repeat: -1,
         },
       ],
+    });
+    this.tweens.add({
+      targets: this.dog,
+      x: 150,
+      duration: 500,
+    });
+    this.tweens.add({
+      targets: this.deer,
+      x: 1090,
+      duration: 500,
     });
   }
 }

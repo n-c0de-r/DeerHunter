@@ -76,7 +76,7 @@ export default class Boots extends Phaser.Scene {
     });
 
     animManager.create({
-      key: Keys.Animations.MuzzleFlash,
+      key: Keys.Animations.MuzzleFlash, // TODO: make muzzle flash work
       frames: animManager.generateFrameNames(Keys.Assets.Effects, {
         prefix: 'Flash',
         start: 1,

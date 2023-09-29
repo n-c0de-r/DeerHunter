@@ -59,6 +59,14 @@ export default class extends Phaser.Scene {
       },
       this
     );
+
+    eventManager.on(
+      Keys.Events.runDeer,
+      () => {
+        this.transitionScenes();
+      },
+      this
+    );
   }
 
   /**

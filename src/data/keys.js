@@ -45,6 +45,8 @@ export const UI = {
   CTAMessage: 'tap_to_shoot.png',
   Gun: 'Gun1.png',
   Scope: 'scope.png',
+  Dog: 'dog.png',
+  Deer: 'deer.png',
 };
 
 export const Events = {

@@ -19,10 +19,10 @@ const gameConfig = {
   },
   physics: {
     default: 'arcade',
-    arcade: {
-      gravity: { y: 0 },
-      debug: true,
-    },
+    // arcade: {
+    //   gravity: { y: 0 },
+    //   debug: true,
+    // },
   }, // Probably not needed here
   scene: [Boot, Game, Bonus, Results, Splash, UI],
 };
