@@ -97,10 +97,14 @@ export default class Deer extends Phaser.Physics.Arcade.Sprite {
 
       this.jump();
       this.once(Phaser.Animations.Events.ANIMATION_COMPLETE_KEY + Keys.Animations.DeerJump, () => {
+        this.stop(Keys.Animations.DeerJump);
+
         eventManager.emit(Keys.Events.runDeer);
         this.remove();
       });
     } else {
+      this.stop(Keys.Animations.DeerJump);
+
       eventManager.emit(Keys.Events.hitDeer);
       this.remove();
     }

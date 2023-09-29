@@ -17,7 +17,10 @@ const DEER_AREA = [
   { x: 1275, y: 547 },
   { x: 0, y: 547 },
 ];
+
 const SPAWN_POINTS = { left: { x: -200, y: 600, flip: -1 }, right: { x: 1480, y: 600, flip: 1 } };
+const LEFT_AREA = new Phaser.Geom.Rectangle(100, 500, 540, 150);
+const RIGHT_AREA = new Phaser.Geom.Rectangle(540, 500, 540, 150);
 const FIRST_POSITION = new Phaser.Geom.Point({ x: 624, y: 534 });
 
 export default class extends Phaser.Scene {
@@ -139,18 +142,16 @@ export default class extends Phaser.Scene {
    * @returns {Deer} A deer instance
    */
   spawnDeer(moveTo) {
-    console.log('spawnDeer ~ moveTo:', moveTo);
     if (Settings.Count_Of_Deer >= 3) return;
 
     const direction = Math.round(Math.random());
     const spawnPoint = Object.values(SPAWN_POINTS).slice(direction)[0];
     // https://phaser.io/examples/v3/view/geom/rectangle/get-random-point - not a zone... ok
-    if (moveTo === undefined) moveTo = this.physics.world.bounds.getRandomPoint();
-    console.log('spawnDeer ~ moveTo === undefined:', moveTo === undefined);
-    // console.log('spawnDeer ~ !moveTo:', !moveTo);
-    // console.log('spawnDeer ~ !Phaser.Geom.Polygon.ContainsPoint(this.dirtANDdeerZone, moveTo):', !Phaser.Geom.Polygon.ContainsPoint(this.dirtANDdeerZone, moveTo));
+    if (direction === 1) moveTo = RIGHT_AREA.getRandomPoint();
+    if (direction === 0) moveTo = LEFT_AREA.getRandomPoint();
     while (!Phaser.Geom.Polygon.ContainsPoint(this.dirtANDdeerZone, moveTo)) {
-      moveTo = this.physics.world.bounds.getRandomPoint();
+      if (direction === 1) moveTo = RIGHT_AREA.getRandomPoint();
+      if (direction === 0) moveTo = LEFT_AREA.getRandomPoint();
     }
 
     this.deer = new Deer(this, spawnPoint.x, spawnPoint.y, spawnPoint.flip, moveTo);

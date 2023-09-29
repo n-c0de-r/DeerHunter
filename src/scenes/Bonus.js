@@ -7,7 +7,9 @@ import Settings from '../data/settings';
 import Deer from '../classes/deer';
 import Scope from '../classes/scope';
 
-const SPAWN_POINTS = { left: { x: -200, y: 600 }, right: { x: 1480, y: 600 } };
+const LEFT_AREA = new Phaser.Geom.Rectangle(100, 500, 540, 150);
+const RIGHT_AREA = new Phaser.Geom.Rectangle(540, 500, 540, 150);
+const SPAWN_POINTS = { left: { x: -200, y: 600, flip: -1 }, right: { x: 1480, y: 600, flip: 1 } };
 const CAMERA_ZOOM = 1;
 
 export default class extends Phaser.Scene {
@@ -31,7 +33,10 @@ export default class extends Phaser.Scene {
   }
 
   create(data) {
-    this.deer = this.spawnDeer(this);
+    this.deer;
+    console.log('create ~ this.deer;:', this.deer);
+    this.spawnDeer();
+    console.log('create ~ this.deer;:', this.deer);
 
     this.setBonus();
   }
@@ -163,18 +168,21 @@ export default class extends Phaser.Scene {
    * @returns {Deer} A deer instance
    */
   spawnDeer() {
-    // const spawnPoint = this.physics.world.bounds.getRandomPoint();
-    // return new Deer(this, spawnPoint.x, spawnPoint.y, this.deerZone);
-
-    const direction = Math.round(Math.random()) * 2 - 1;
+    const direction = Math.round(Math.random());
+    console.log('spawnDeer ~ direction:', direction);
     const spawnPoint = Object.values(SPAWN_POINTS).slice(direction)[0];
+    console.log('spawnDeer ~ spawnPoint:', spawnPoint);
 
-    let movePoint = this.physics.world.bounds.getRandomPoint();
+    let movePoint;
+
+    if (direction === 1) movePoint = RIGHT_AREA.getRandomPoint();
+    if (direction === 0) movePoint = LEFT_AREA.getRandomPoint();
     while (!Phaser.Geom.Polygon.ContainsPoint(this.dirtANDdeerZone, movePoint)) {
-      movePoint = this.physics.world.bounds.getRandomPoint();
+      if (direction === 1) movePoint = RIGHT_AREA.getRandomPoint();
+      if (direction === 0) movePoint = LEFT_AREA.getRandomPoint();
     }
 
-    this.deer = new Deer(this, spawnPoint.x, spawnPoint.y, direction, movePoint);
+    this.deer = new Deer(this, spawnPoint.x, spawnPoint.y, spawnPoint.flip, movePoint);
   }
 
   /**
