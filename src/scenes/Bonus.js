@@ -34,9 +34,7 @@ export default class extends Phaser.Scene {
 
   create(data) {
     this.deer;
-    console.log('create ~ this.deer;:', this.deer);
     this.spawnDeer();
-    console.log('create ~ this.deer;:', this.deer);
 
     this.setBonus();
   }
@@ -169,9 +167,7 @@ export default class extends Phaser.Scene {
    */
   spawnDeer() {
     const direction = Math.round(Math.random());
-    console.log('spawnDeer ~ direction:', direction);
     const spawnPoint = Object.values(SPAWN_POINTS).slice(direction)[0];
-    console.log('spawnDeer ~ spawnPoint:', spawnPoint);
 
     let movePoint;
 
