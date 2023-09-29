@@ -19,7 +19,6 @@ export default class Gun extends Phaser.Physics.Arcade.Sprite {
     MIDPOINT.x = this.x; //scene.sys.game.config.width / 2;
     MIDPOINT.y = this.y; //scene.sys.game.config.height - MOVE_RANGE;
     this.isReloading = false;
-    this.name = Keys.Assets.Gun;
   }
 
   /**

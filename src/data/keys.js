@@ -7,7 +7,7 @@ export const Names = {
 export const Scenes = {
   Boot: 'BootScene',
   Game: 'GameScene',
-  Bonus: 'ScopeScene',
+  Bonus: 'BonusScene',
   Results: 'ResultScene',
   Splash: 'SplashScene',
   UI: 'UI',
@@ -35,29 +35,24 @@ export const Animations = {
 // UI Elements
 export const UI = {
   Font: 'Bangers',
-  Logo: 'logo',
+  Logo: 'logo.png',
   CountContainer: 'scoreIcon_BG.png',
   CountPositive: 'scoreIcon_active.png',
   CountNegative: 'scoreIcon_inactive.png',
   BulletsCounter: 'BulletsCounter',
   Bullet: 'bullet_small.png',
-  ButtonAgain: 'ButtonAgain',
+  ButtonAgain: 'ui_button_Continue.png',
   CTAMessage: 'tap_to_shoot.png',
   Gun: 'Gun1.png',
   Scope: 'scope.png',
 };
 
 export const Events = {
-  showGun: 'show-gun',
-  tutorialDone: 'tutorial-done',
   shootGun: 'shoot-gun',
+  shootScope: 'shoot-scope',
   emptyGun: 'empty-gun',
   hitDeer: 'hit-deer',
   playBonus: 'play-bonus',
   timeoutMessage: 'timeout-message',
   timeoutGame: 'timeout-game',
-  showCTA: 'show-CTA',
-  hideCTA: 'hide-CTA',
-  stopTimer: 'stop-timer',
-  resumeTimer: 'resume-timer',
 };

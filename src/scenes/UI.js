@@ -5,7 +5,6 @@ import * as Keys from '../data/keys';
 import Settings from '../data/settings';
 
 import Gun from '../classes/gun';
-import Scope from '../classes/scope';
 
 export default class UI extends Phaser.Scene {
   constructor() {
@@ -14,17 +13,12 @@ export default class UI extends Phaser.Scene {
     this.CTAtimer = 0;
     this.isTimerRunning = false;
     this.isTutorialDone = false;
-    this.isBonusLayout = false;
   }
 
   init(data) {
     // Enables different move behavior depending on device
     // https://phaser.discourse.group/t/check-if-mobile/305/5¡
     this.setInputs(this.sys.game.device.os.desktop, this);
-
-    this.cameras.main.fadeIn(Settings.Cam_FadeTime);
-
-    this.setEvents();
   }
 
   create(data) {
@@ -61,7 +55,7 @@ export default class UI extends Phaser.Scene {
     this.gun.setAlpha(0);
 
     this.time.delayedCall(Settings.Cam_FadeTime, () => {
-      this.mask = this.setMask(400, 300, 128);
+      this.mask = this.setMask(data.x, data.y, data.size / 2);
       this.setOverlay(this.mask, 0.75);
       this.overlayTween.play();
       this.overlayTween.on(Phaser.Tweens.Events.TWEEN_COMPLETE, () => {
@@ -69,15 +63,14 @@ export default class UI extends Phaser.Scene {
         this.showGun();
         this.isTimerRunning = true;
       });
-      // this.setTutorial(this.deer.x, this.deer.y);
     });
+    this.setEvents();
   }
 
   update(time, delta) {
     // All icons are on, so 3 deers killed :(
     if (!this.isBonusLayout && !this.deerIcons.getFirstDead()) {
       this.isBonusLayout = true;
-      console.log('bonus emit');
       eventManager.emit(Keys.Events.playBonus);
     }
 
@@ -90,11 +83,6 @@ export default class UI extends Phaser.Scene {
   // UI RELATED FUNCTIONS
 
   setEvents() {
-    eventManager.on(Keys.Events.showGun, this.showGun, this);
-    this.events.on(Phaser.Scenes.Events.SHUTDOWN, () => {
-      eventManager.off(Keys.Events.showGun, this.showGun, this);
-    });
-
     eventManager.on(Keys.Events.hitDeer, this.finishTutorial, this);
     this.events.on(Phaser.Scenes.Events.SHUTDOWN, () => {
       eventManager.off(Keys.Events.hitDeer, this.finishTutorial, this);
@@ -108,34 +96,22 @@ export default class UI extends Phaser.Scene {
       },
       this
     );
-    this.events.on(Phaser.Scenes.Events.SHUTDOWN, () => {
-      eventManager.off(
-        Keys.Events.shootGun,
-        () => {
-          this.updateBullets();
-          this.hideCTA();
-        },
-        this
-      );
-    });
+    this.events.on(
+      Phaser.Scenes.Events.SHUTDOWN,
+      () => {
+        eventManager.off(Keys.Events.shootGun, this.updateBullets, this);
+        eventManager.off(Keys.Events.shootGun, this.hideCTA, this);
+      },
+      this
+    );
 
     eventManager.on(Keys.Events.hitDeer, this.updateCounter, this);
     this.events.on(Phaser.Scenes.Events.SHUTDOWN, () => {
       eventManager.off(Keys.Events.hitDeer, this.updateCounter, this);
     });
 
-    eventManager.on(
-      Keys.Events.playBonus,
-      () => {
-        this.cameras.main.fadeOut(Settings.Cam_FadeTime);
-        this.time.delayedCall(Settings.Cam_FadeTime, () => {
-          this.setBonus();
-        });
-      },
-      this
-    );
+    eventManager.on(Keys.Events.playBonus, () => this.cameras.main.fadeOut(Settings.Cam_FadeTime), this);
     eventManager.on(Keys.Events.emptyGun, () => this.cameras.main.fadeOut(Settings.Cam_FadeTime), this);
-    eventManager.on(Keys.Events.timeoutGame, () => this.cameras.main.fadeOut(Settings.Cam_FadeTime), this);
   }
 
   /**
@@ -147,27 +123,14 @@ export default class UI extends Phaser.Scene {
     // https://photonstorm.github.io/phaser3-docs/Phaser.Input.Events.html
     // Desktops don't need drag wrapped around
     if (isDesktop) {
-      this.input.on(
-        Phaser.Input.Events.POINTER_MOVE,
-        (pointer) => {
-          this.gun.move(pointer.x, pointer.y);
-          console.log(this.gun.isEnabled);
-          console.log('scope name', this.gun.name);
-          console.log('scope key', Keys.UI.Scope);
-          if (this.gun.isEnabled && this.gun.name === Keys.UI.Scope) {
-            this.mask = this.setMask(pointer.x, pointer.y, this.gun.getBounds().width / 2);
-            this.overlay = this.setOverlay(this.mask, 1);
-          }
-        },
-        scene
-      );
+      this.input.on(Phaser.Input.Events.POINTER_MOVE, (pointer) => this.gun.move(pointer.x, pointer.y), scene);
 
       this.input.on(
         Phaser.Input.Events.POINTER_UP,
         (pointer) => {
-          if (Math.abs(pointer.downX - pointer.upX) <= 10 && Math.abs(pointer.downY - pointer.upY) <= 10) {
-            this.gun.shoot(pointer.x, pointer.y);
-          }
+          if (Math.abs(pointer.downX - pointer.upX) > 10) return;
+          if (Math.abs(pointer.downY - pointer.upY) > 10) return;
+          this.gun.shoot(pointer.x, pointer.y);
         },
         scene
       );
@@ -176,20 +139,14 @@ export default class UI extends Phaser.Scene {
       this.input.on(
         Phaser.Input.Events.POINTER_DOWN,
         () => {
-          this.input.on(Phaser.Input.Events.POINTER_MOVE, (pointer) => {
-            this.gun.move(pointer.x, pointer.y);
-            if (this.gun.isEnabled && this.gun.name === Keys.UI.Scope) {
-              this.mask = this.setMask(pointer.x, pointer.y, this.gun.getBounds().width / 2);
-              this.overlay = this.setOverlay(this.mask, 1);
-            }
-          });
+          this.input.on(Phaser.Input.Events.POINTER_MOVE, (pointer) => this.gun.move(pointer.x, pointer.y));
           // Shoot on release
           this.input.on(
             Phaser.Input.Events.POINTER_UP,
             (pointer) => {
-              if (Math.abs(pointer.downX - pointer.upX) <= 10 && Math.abs(pointer.downY - pointer.upY) <= 10) {
-                this.gun.shoot(pointer.x, pointer.y);
-              }
+              if (Math.abs(pointer.downX - pointer.upX) > 10) return;
+              if (Math.abs(pointer.downY - pointer.upY) > 10) return;
+              this.gun.shoot(pointer.x, pointer.y);
             },
             scene
           );
@@ -273,30 +230,10 @@ export default class UI extends Phaser.Scene {
       targets: this.gun,
       alpha: 1,
       duration: 500,
-      onComplete: () => {
-        eventManager.off(Keys.Events.showGun, this.showGun, this);
-      },
     });
     this.gun.toggleEnabled(true);
     this.gun.setBullets(Infinity);
     this.showCTA();
-  }
-
-  /**
-   * Sets up the bonus view
-   */
-  setBonus() {
-    this.gun.destroy();
-    console.log('bonus setup');
-    const x = this.sys.game.config.width / 2;
-    const y = this.sys.game.config.height / 2;
-    this.gun = new Scope(this, x, y);
-    this.gun.setScale(0.5);
-    this.mask = this.setMask(x, y, this.gun.getBounds().width / 2);
-    this.overlay = this.setOverlay(this.mask, 1);
-    this.toggleInterface(false);
-    this.cameras.main.fadeIn(Settings.Cam_FadeTime);
-    this.time.delayedCall(Settings.Cam_FadeTime, this.gun.toggleEnabled(true));
   }
 
   /**
@@ -372,9 +309,9 @@ export default class UI extends Phaser.Scene {
    * Updates the counter display
    */
   updateCounter() {
-    Settings.Amount_Of_Deer -= 1;
     const icon = this.deerIcons.getFirstDead();
     if (!icon || !this.isTutorialDone) return;
+    Settings.Count_Of_Deer += 1;
 
     icon.setActive(true);
     icon.fx.reset();

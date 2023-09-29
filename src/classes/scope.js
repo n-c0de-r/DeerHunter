@@ -4,7 +4,6 @@ import eventManager from './EventManager';
 import * as Keys from '../data/keys';
 
 const MIDPOINT = { x: 0, y: 0 };
-const KNOCKBACK_DELAY = 500;
 
 export default class Scope extends Phaser.Physics.Arcade.Sprite {
   /**
@@ -17,7 +16,6 @@ export default class Scope extends Phaser.Physics.Arcade.Sprite {
 
     MIDPOINT.x = this.x;
     MIDPOINT.y = this.y;
-    this.name = Keys.UI.Scope;
   }
 
   /**
@@ -47,6 +45,7 @@ export default class Scope extends Phaser.Physics.Arcade.Sprite {
   shoot(x, y) {
     if (!this.isEnabled) return;
 
-    eventManager.emit(Keys.Events.shootGun, x, y);
+    eventManager.emit(Keys.Events.shootScope, x, y);
+    this.isEnabled = false;
   }
 }

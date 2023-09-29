@@ -107,7 +107,7 @@ export default class Boots extends Phaser.Scene {
         zeroPad: 2,
         suffix: '.png',
       }),
-      frameRate: 10,
+      frameRate: 20,
     });
 
     this.anims.create({

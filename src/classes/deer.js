@@ -20,6 +20,7 @@ export default class Deer extends Phaser.Physics.Arcade.Sprite {
     scene.physics.world.enable(this);
     this.resetHitBounds();
     this.setHitListener();
+    this.jump();
   }
 
   resetHitBounds() {
@@ -32,6 +33,11 @@ export default class Deer extends Phaser.Physics.Arcade.Sprite {
     eventManager.on(Keys.Events.shootGun, this.hit, this);
     this.scene.events.on(Phaser.Scenes.Events.SHUTDOWN, () => {
       eventManager.off(Keys.Events.shootGun, this.hit, this);
+    });
+
+    eventManager.on(Keys.Events.shootScope, this.hit, this);
+    this.scene.events.on(Phaser.Scenes.Events.SHUTDOWN, () => {
+      eventManager.off(Keys.Events.shootScope, this.hit, this);
     });
   }
 
@@ -61,9 +67,5 @@ export default class Deer extends Phaser.Physics.Arcade.Sprite {
       });
     }
     eventManager.off(Keys.Events.shootGun, this.hit, this);
-  }
-
-  getPosition() {
-    return { x: this.x, y: this.y };
   }
 }
